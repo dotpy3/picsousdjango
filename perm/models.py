@@ -1,5 +1,7 @@
 from django.db import models
+from django.utils import timezone
 
+from core import models as core_models
 from core.services import payutc
 from picsous.settings import NEMOPAY_CONNECTION_PIN, NEMOPAY_CONNECTION_UID, NEMOPAY_FUNDATION_ID,\
     NEMOPAY_ARTICLES_CATEGORY
@@ -30,13 +32,12 @@ class Perm(models.Model):
     remarque = models.TextField(null=True, default=None)
 
 
-class Article(models.Model):
+class Article(core_models.PricedModel):
     id_payutc = models.IntegerField(null=True, default=None)
     stock = models.IntegerField(default=0)
     ventes = models.IntegerField(default=0)
-    tva = models.FloatField(default=0)
-    prix = models.IntegerField(default=0)
-    nom = models.IntegerField()
+    ventes_last_update = models.DateTimeField(null=True, default=None)
+    nom = models.CharField(max_length=255)
     perm = models.ForeignKey(Perm)
 
     def create_payutc_article(self):
@@ -47,6 +48,7 @@ class Article(models.Model):
                      parent=NEMOPAY_ARTICLES_CATEGORY, prices=[], prix=int(self.prix*100), stock=self.stock,
                      tva=self.tva, variable_price=False, virtual=False)
         self.id_payutc = int(rep['success'])
+        self.ventes_last_update = timezone.now()
         self.save()
         return self.id_payutc
 
@@ -58,5 +60,6 @@ class Article(models.Model):
         if len(sales) == 0:
             return False
         self.ventes = sales[0]
+        self.ventes_last_update = timezone.now()
         self.save()
         return self.ventes

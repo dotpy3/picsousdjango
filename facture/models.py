@@ -2,6 +2,7 @@
 
 from django.db import models
 
+from core import models as core_models
 from perm import models as perm_models
 
 
@@ -22,11 +23,12 @@ class Cheque(models.Model):
     )
 
     num = models.IntegerField()
+    valeur = models.FloatField(default=0)
     state = models.CharField(max_length=1, choices=CHEQUE_STATES)
     destinataire = models.CharField(max_length=255, null=True, default=None)
 
 
-class FactureRecue(models.Model):
+class FactureRecue(core_models.PricedModel):
     perm = models.ForeignKey(perm_models.Perm, null=True, default=None)
     categorie = models.ForeignKey(CategorieFactureRecue, null=True)
     nom_entreprise = models.CharField(max_length=255)
@@ -35,8 +37,6 @@ class FactureRecue(models.Model):
     date_remboursement = models.DateField(null=True, default=None)
     moyen_paiement = models.CharField(null=True, default=None, max_length=255)
     personne_a_rembourser = models.CharField(null=True, default=None, max_length=255)
-    montant_ht = models.FloatField(default=0)
-    montant_tva = models.FloatField(default=0)
     immobilisation = models.BooleanField(default=False)
     remarque = models.TextField(null=True, default=None)
     cheque = models.ForeignKey(Cheque, null=True)
@@ -46,11 +46,13 @@ class FactureEmise(models.Model):
 
     FACTURE_DUE = 'D'
     FACTURE_ANNULEE = 'A'
+    FACTURE_PARTIELLEMENT_PAYEE = 'T'
     FACTURE_PAYEE = 'P'
 
     FACTURE_STATES = (
         (FACTURE_DUE, 'Due'),
         (FACTURE_ANNULEE, 'Annulée'),
+        (FACTURE_PARTIELLEMENT_PAYEE, 'Partiellement payée'),
         (FACTURE_PAYEE, 'Payée'),
     )
 
@@ -62,8 +64,6 @@ class FactureEmise(models.Model):
     etat = models.CharField(max_length=1, choices=FACTURE_STATES)
 
 
-class FactureEmiseRow(models.Model):
+class FactureEmiseRow(core_models.PricedModel):
     nom = models.CharField(max_length=255)
-    prix = models.FloatField()
-    tva = models.FloatField()
     qty = models.IntegerField()
