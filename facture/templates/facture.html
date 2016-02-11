@@ -17,10 +17,11 @@
                     IBAN FR76 3000 3006 7000 0372 6727 183<br />
                     picasso-treso@assos.utc.fr<br />
                     Représenté par {{ facture.nom_createur }}</p>
-					<p><strong>Objet : Facture N°{{ facture.pk }}</strong><br />
+					<p><strong>Objet : Facture N°{{ facture.date_creation | date:'Y-m' }}-{{ facture.pk }}</strong><br />
                     Destinataire : {{ facture.destinataire | upper }}<br />
-					Date : {{ facture.date_creation | date:'d/m/y' }}<br />
-                    Date dûe : {{ facture.date_due | date:'d/m/y' }}</p>
+					Date : {{ facture.date_creation | date:'d/m/Y' }}<br />
+					Date de livraison : {{ facture.date_livraison | date:'d/m/Y' }}<br />
+                    Date dûe : {{ facture.date_due | date:'d/m/Y' }}</p>
 				</div>
 				<div class="col-xs-4">
 					<img class="pull-right" src="{% static 'logo_monochrome.png' %}" />
@@ -80,7 +81,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    
+                    <p>Pas d'escompte en cas de paiement anticipé.</p>
                 </div>
             </div>
 		</div>
