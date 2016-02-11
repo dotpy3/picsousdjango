@@ -59,11 +59,29 @@ class FactureEmise(models.Model):
     destinataire = models.CharField(max_length=255)
     date_creation = models.DateField()
     nom_createur = models.CharField(max_length=255)
-    date_paiement = models.DateField()
+    date_paiement = models.DateField(null=True)
     date_due = models.DateField()
     etat = models.CharField(max_length=1, choices=FACTURE_STATES)
 
+    def get_total_ht_price(self):
+        rows = self.factureemiserow_set.all()
+        return round(sum([row.get_total_ht_price() for row in rows]), 2)
+
+    def get_total_ttc_price(self):
+        rows = self.factureemiserow_set.all()
+        return round(sum([row.get_total_ttc_price() for row in rows]), 2)
+
 
 class FactureEmiseRow(core_models.PricedModel):
+    facture = models.ForeignKey(FactureEmise)
     nom = models.CharField(max_length=255)
     qty = models.IntegerField()
+
+    def get_total_ttc_price(self):
+        return self.prix * self.qty
+
+    def get_total_ht_price(self):
+        return self.qty * self.get_price_without_taxes()
+
+    def get_total_taxes_for_row(self):
+        return self.qty * self.get_total_taxes()
