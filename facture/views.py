@@ -62,4 +62,4 @@ def tva_info(request):
     tva_set = Set()
 
     for tva in tva_set:
-
+        pass
