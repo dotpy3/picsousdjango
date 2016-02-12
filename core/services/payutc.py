@@ -4,7 +4,8 @@ import requests
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 
-from picsous.settings import NEMOPAY_API_URL, NEMOPAY_SYSTEM_ID, NEMOPAY_API_KEY, NEMOPAY_LOGIN_SERVICE
+from picsous.settings import NEMOPAY_API_URL, NEMOPAY_SYSTEM_ID, NEMOPAY_API_KEY, NEMOPAY_LOGIN_SERVICE,\
+    NEMOPAY_CONNECTION_UID, NEMOPAY_CONNECTION_PIN
 
 class NemopayClientException(Exception):
     pass
@@ -34,6 +35,9 @@ class Client:
     def loginApp(self, service=NEMOPAY_LOGIN_SERVICE):
         self.SESSION_ID = str(self.call(service, 'loginApp', key=NEMOPAY_API_KEY)['sessionid'])
         return self.SESSION_ID
+
+    def loginBadge(self, badge_id=NEMOPAY_CONNECTION_UID, pin=NEMOPAY_CONNECTION_PIN):
+        return self.call('POSS3', 'loginBadge2', badge_id=badge_id, pin=pin)
 
     def _call_url(self, service, method):
         return NEMOPAY_API_URL + service + '/' + method
