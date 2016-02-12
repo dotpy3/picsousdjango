@@ -31,7 +31,8 @@ def convention_partenariat(request, id):
     for article in articles:
         perm_articles.append({'nom': article.nom, 'stock': article.stock, 'prixTTC': article.prix,
                               'prixHT': article.get_price_without_taxes(), 'TVA': article.tva})
-    return render(request, 'convention_partenariat.html', {'perm': perm, 'articles': perm_articles})
+    return render(request, 'convention_partenariat.html', {'perm': perm, 'articles': perm_articles,
+                                                           'montant': round(perm.get_montant_deco_max(), 2)})
 
 
 def justificatif_paiement(request, id):
