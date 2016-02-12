@@ -18,7 +18,7 @@ class Perm(models.Model):
     )
 
     nom = models.CharField(max_length=255)
-    asso = models.BooleanField(default=True) # true if asso
+    asso = models.BooleanField(default=True)  # true if asso
     nom_resp = models.CharField(null=True, default=None, max_length=255)
     mail_resp = models.CharField(null=True, default=None, max_length=255)
     tel_resp = models.CharField(null=True, default=None, max_length=255)
@@ -49,9 +49,12 @@ class Article(core_models.PricedModel):
         c = payutc.Client()
         c.loginApp()
         c.loginBadge()
-        rep = c.call('GESARTICLES', 'setArticle', active=True, alcool=False, components=[], cotisant=True,
-                     fun_id=NEMOPAY_FUNDATION_ID, image_path='', meta=dict(), name=self.nom, pack=False,
-                     parent=NEMOPAY_ARTICLES_CATEGORY, prices=[], prix=int(self.prix*100), stock=self.stock,
+        rep = c.call('GESARTICLES', 'setArticle', active=True, alcool=False,
+                     components=[], cotisant=True,
+                     fun_id=NEMOPAY_FUNDATION_ID, image_path='', meta=dict(),
+                     name=self.nom, pack=False,
+                     parent=NEMOPAY_ARTICLES_CATEGORY, prices=[],
+                     prix=int(self.prix*100), stock=self.stock,
                      tva=self.tva, variable_price=False, virtual=False)
         self.id_payutc = int(rep['success'])
         self.ventes_last_update = timezone.now()
@@ -63,7 +66,8 @@ class Article(core_models.PricedModel):
         c.loginApp()
         c.loginBadge()
         rep = c.call('TRESO', 'getExport', fun_id=NEMOPAY_FUNDATION_ID)
-        sales = [obj['quantity'] for obj in rep if obj['obj_id'] == self.id_payutc]
+        sales = [obj['quantity'] for obj in rep
+                 if obj['obj_id'] == self.id_payutc]
         if len(sales) == 0:
             return False
         self.ventes = sales[0]

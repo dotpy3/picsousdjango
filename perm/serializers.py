@@ -14,7 +14,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = perm_models.Article
-        fields = ('stock', 'nom', 'prix', 'perm', 'ventes', 'tva', 'ventes_last_update')
+        fields = ('stock', 'nom', 'prix', 'perm', 'ventes', 'tva',
+                  'ventes_last_update')
 
 ArticleListSerializer = ArticleSerializer.many_init
 
