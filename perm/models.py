@@ -3,8 +3,7 @@ from django.utils import timezone
 
 from core import models as core_models
 from core.services import payutc
-from picsous.settings import NEMOPAY_CONNECTION_PIN, NEMOPAY_CONNECTION_UID, NEMOPAY_FUNDATION_ID,\
-    NEMOPAY_ARTICLES_CATEGORY
+from picsous.settings import NEMOPAY_FUNDATION_ID, NEMOPAY_ARTICLES_CATEGORY
 
 
 class Perm(models.Model):
@@ -28,6 +27,14 @@ class Perm(models.Model):
     periode = models.CharField(choices=PERIOD_VALUES, max_length=1)
     montantTTCMaxAutorise = models.FloatField(null=True, default=None)
     remarque = models.TextField(null=True, default=None)
+
+    def get_montant_deco_max(self):
+        if self.montantTTCMaxAutorise:
+            return self.montantTTCMaxAutorise
+        if self.date.weekday() in [3, 4]:
+            return 30
+        else:
+            return 20
 
 
 class Article(core_models.PricedModel):

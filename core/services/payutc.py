@@ -37,7 +37,6 @@ class Client:
         return self.SESSION_ID
 
     def loginBadge(self, badge_id=NEMOPAY_CONNECTION_UID, pin=NEMOPAY_CONNECTION_PIN):
-        print(repr(badge_id))
         return self.call('POSS3', 'loginBadge2', badge_id=badge_id, pin=pin)
 
     def _call_url(self, service, method):
