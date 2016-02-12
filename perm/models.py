@@ -27,8 +27,6 @@ class Perm(models.Model):
     date = models.DateField()
     periode = models.CharField(choices=PERIOD_VALUES, max_length=1)
     montantTTCMaxAutorise = models.FloatField(null=True, default=None)
-    montantDecoHT = models.FloatField(default=0)
-    montantDecoTVA = models.FloatField(default=0)
     remarque = models.TextField(null=True, default=None)
 
 
