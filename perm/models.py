@@ -49,7 +49,7 @@ class Article(core_models.PricedModel):
         c = payutc.Client()
         c.loginApp()
         c.loginBadge()
-        rep = c.call('GESARTICLE', 'setArticle', active=True, alcool=False,
+        rep = c.call('GESARTICLE', 'setProduct', active=True, alcool=False,
                      components=[], cotisant=True,
                      fun_id=NEMOPAY_FUNDATION_ID, image_path='', meta=dict(),
                      name=self.nom, pack=False,
