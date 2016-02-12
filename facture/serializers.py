@@ -36,4 +36,4 @@ class FactureEmiseWithRowsSerializer(serializers.ModelSerializer):
 
 
 class TvaInfo(serializers.Serializer):
-
+    pass
