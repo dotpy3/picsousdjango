@@ -19,6 +19,24 @@ class UserRight(models.Model):
     right = models.CharField(max_length=1, choices=USERRIGHT_CHOICES)
 
 
+class BugReport(models.Model):
+    STATE_NOT_RESOLVED = 'N'
+    STATE_IN_PROGRESS = 'P'
+    STATE_RESOLVED = 'R'
+
+    STATE_CHOICES = (
+        (STATE_NOT_RESOLVED, 'Non résolu'),
+        (STATE_IN_PROGRESS, 'Non résolu'),
+        (STATE_RESOLVED, 'Non résolu'),
+    )
+
+    state = models.CharField(max_length=1, choices=STATE_CHOICES)
+    date = models.DateTimeField(auto_now_add=True)
+    reporter_name = models.CharField(max_length=255)
+    reporter_mail = models.CharField(max_length=255)
+    content = models.TextField()
+
+
 class Periode(models.Model):
     debut = models.DateField()
     fin = models.DateField()

@@ -55,3 +55,11 @@ def facture(request, id):
     return render(request, 'facture.html', {'facture': facture, 'rows': rows_info, 'tva_amounts': tva_info,
                                             'total_ht': facture.get_total_ht_price(),
                                             'total_ttc': facture.get_total_ttc_price()})
+
+
+def tva_info(request):
+    tva_deductible = sum([facture.get_total_taxes() for facture in facture_models.FactureRecue.objects.all()])
+    tva_set = Set()
+
+    for tva in tva_set:
+

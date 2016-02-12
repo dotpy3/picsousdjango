@@ -33,3 +33,7 @@ class FactureEmiseWithRowsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = facture_models.FactureEmise
+
+
+class TvaInfo(serializers.Serializer):
+
