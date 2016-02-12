@@ -49,8 +49,8 @@ class Article(core_models.PricedModel):
         c = payutc.Client()
         c.loginApp()
         c.loginBadge()
-        rep = c.call('GESARTICLE', 'setProduct', active=True, alcool=False,
-                     components=[], cotisant=True,
+        rep = c.call('GESARTICLE', 'setProduct', active=True, alcool=False, cotisant=True,
+                     components=[],
                      fun_id=NEMOPAY_FUNDATION_ID, image_path='', meta=dict(),
                      name=self.nom, pack=False,
                      parent=NEMOPAY_ARTICLES_CATEGORY, prices=[],
@@ -69,8 +69,9 @@ class Article(core_models.PricedModel):
         sales = [obj['quantity'] for obj in rep
                  if obj['obj_id'] == self.id_payutc]
         if len(sales) == 0:
-            return False
-        self.ventes = sales[0]
+            self.ventes = 0
+        else:
+            self.ventes = sales[0]
         self.ventes_last_update = timezone.now()
         self.save()
         return self.ventes

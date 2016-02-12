@@ -48,7 +48,7 @@ class Client:
             params = { 'system_id': NEMOPAY_SYSTEM_ID }
         if self.SESSION_ID is not None:
             params['sessionid'] = self.SESSION_ID
-        r = requests.post(self._call_url(service, method), params=params, data=data)
+        r = requests.post(self._call_url(service, method), params=params, json=data)
         if r.status_code != 200:
             raise NemopayClientException(r.text)
         return json.loads(r.text)
