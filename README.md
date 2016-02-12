@@ -7,3 +7,7 @@
 3. Install requirements with `pip install -r requirements.txt`.
 4. Launch migrations with `python manage.py migrate`.
 5. Run server with `python manage.py runserver 0.0.0.0:8090` (for port 8090).
+
+## Launch interactive shell
+
+To launch the Django interactive shell to interact with the database, type `python manage.py shell_plus`.

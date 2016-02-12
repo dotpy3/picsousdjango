@@ -42,6 +42,7 @@ class Article(core_models.PricedModel):
 
     def create_payutc_article(self):
         c = payutc.Client()
+        c.loginApp()
         c.call('POSS3', 'loginBadge', badge_uid=NEMOPAY_CONNECTION_UID, pin=NEMOPAY_CONNECTION_PIN)
         rep = c.call('GESARTICLES', 'setArticle', active=True, alcool=False, components=[], cotisant=True,
                      fun_id=NEMOPAY_FUNDATION_ID, image_path='', meta=dict(), name=self.nom, pack=False,
@@ -54,6 +55,7 @@ class Article(core_models.PricedModel):
 
     def update_ventes(self):
         c = payutc.Client()
+        c.loginApp()
         c.call('POSS3', 'loginBadge', badge_uid=NEMOPAY_CONNECTION_UID, pin=NEMOPAY_CONNECTION_PIN)
         rep = c.call('TRESO', 'getExport', fun_id=NEMOPAY_FUNDATION_ID)
         sales = [obj['quantity'] for obj in rep if obj['obj_id'] == self.id_payutc]
