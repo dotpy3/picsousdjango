@@ -59,7 +59,6 @@ class FactureEmise(models.Model):
     destinataire = models.CharField(max_length=255)
     date_creation = models.DateField(auto_now_add=True)
     nom_createur = models.CharField(max_length=255)
-    date_livraison = models.DateField(null=True)
     date_paiement = models.DateField(null=True)
     date_due = models.DateField()
     etat = models.CharField(max_length=1, choices=FACTURE_STATES)

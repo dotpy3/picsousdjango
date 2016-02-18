@@ -15,7 +15,7 @@ class UserRight(models.Model):
         (USERRIGHT_NONE, 'Accès interdit'),
     )
 
-    login = models.CharField(max_length=10)
+    login = models.CharField(max_length=10, unique=True)
     right = models.CharField(max_length=1, choices=USERRIGHT_CHOICES)
 
 
@@ -56,6 +56,24 @@ class Semestre(Periode):
 
     semestre = models.CharField(max_length=1, choices=SEMESTRE_CHOICES)
     annee = models.IntegerField()
+
+    class Meta:
+        abstract = False
+
+
+class PeriodeTVA(Periode):
+    PERIODE_NON_DECLAREE = 'N'
+    PERIODE_DECLAREE = 'D'
+
+    PERIODE_CHOICES = (
+        (PERIODE_NON_DECLAREE, 'Non déclarée'),
+        (PERIODE_DECLAREE, 'Déclarée'),
+    )
+
+    state = models.CharField(max_length=1, choices=PERIODE_CHOICES, default='N')
+
+    class Meta:
+        abstract = False
 
 
 class PricedModel(models.Model):

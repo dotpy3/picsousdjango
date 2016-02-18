@@ -27,25 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
-LOGGING = {
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': '/root/picsous-django/django.log',  #TO DEFINE IN LOCAL_SETTINGS
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-    'disable_existing_loggers': False,
-    'version': 1,
-}
-
 # Application definition
 
 INSTALLED_APPS = [

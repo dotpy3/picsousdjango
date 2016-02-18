@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
     url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
+    url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 urlpatterns += utcaccounts_urlpatterns

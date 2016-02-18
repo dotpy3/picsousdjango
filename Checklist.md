@@ -6,7 +6,7 @@ Gestion de la TVA :
 
 Système de login
 
-Système de logs
+Système de logs : a voir plus tard
 
 Endpoints API :
 * Bug report

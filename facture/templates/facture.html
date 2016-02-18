@@ -20,7 +20,6 @@
 					<p><strong>Objet : Facture N°{{ facture.date_creation | date:'Y-m' }}-{{ facture.pk }}</strong><br />
                     Destinataire : {{ facture.destinataire | upper }}<br />
 					Date : {{ facture.date_creation | date:'d/m/Y' }}<br />
-					Date de livraison : {{ facture.date_livraison | date:'d/m/Y' }}<br />
                     Date dûe : {{ facture.date_due | date:'d/m/Y' }}</p>
 				</div>
 				<div class="col-xs-4">

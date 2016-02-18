@@ -1,9 +1,14 @@
 from rest_framework import routers
+from core import views as core_views
 from facture import views as facture_views
 from perm import views as perm_views
 
 
 router = routers.DefaultRouter()
+
+# Core
+router.register(r'bug', core_views.BugReportViewset)
+router.register(r'periodetva', core_views.PeriodeTVAViewset)
 
 # Perms
 router.register(r'perms', perm_views.PermViewSet)
