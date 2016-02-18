@@ -14,3 +14,8 @@ class PeriodeTVASerializer(serializers.Serializer):
 	class Meta:
 		model = core_models.PeriodeTVA
 		fields = ('debut', 'fin', 'state')
+
+
+class LoginInputSerializer(serializers.Serializer):
+	ticket = serializers.CharField()
+	service = serializers.CharField()
