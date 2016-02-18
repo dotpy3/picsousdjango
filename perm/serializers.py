@@ -10,12 +10,12 @@ class PermSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     ventes = serializers.IntegerField(read_only=True)
-    ventes_last_update = serializers.IntegerField(read_only=True)
+    ventes_last_update = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = perm_models.Article
         fields = ('stock', 'nom', 'prix', 'perm', 'ventes', 'tva',
-                  'ventes_last_update')
+                  'ventes_last_update', 'id_payutc')
 
 ArticleListSerializer = ArticleSerializer.many_init
 

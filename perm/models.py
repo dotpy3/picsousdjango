@@ -46,6 +46,8 @@ class Article(core_models.PricedModel):
     perm = models.ForeignKey(Perm)
 
     def create_payutc_article(self):
+        if self.id_payutc:
+            return self.id_payutc
         c = payutc.Client()
         c.loginApp()
         c.loginBadge()

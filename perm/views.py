@@ -3,6 +3,8 @@ from core import viewsets as core_viewsets
 from perm import models as perm_models
 from perm import serializers as perm_serializers
 from rest_framework import viewsets
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from sets import Set
 
@@ -79,3 +81,10 @@ class UpdateArticleViewSet(viewsets.GenericViewSet):
         a.get_fresh()
         serializer = self.get_serializer(a)
         return Response(serializer.data)
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer, ))
+def create_payutc_article(request, id):
+    article = perm_models.Article.objects.get(pk=id)
+    article.create_payutc_article()
+    return Response(True)

@@ -90,7 +90,7 @@ def tva_info(request, id):
     tva_a_declarer = list()
     for tva_type in tva_types:
         tva_a_declarer.append({'pourcentage': tva_type,
-                               'montant': sum([(1 - (100 / (100 + sale['pur_tva'])))*sale['pur_unit_price']*0.01*sale['quantity'] for sale in sales if sale['pur_tva'] == tva_type])
+                               'montant': sum([(1 - (100 / (100 + sale['pur_tva'])))*sale['total']*0.01 for sale in sales if sale['pur_tva'] == tva_type])
                                + sum(facture.get_total_taxes() * facture.qty for facture in factures_emises if facture.tva == tva_type)})
 
     return Response({'tva_deductible': tva_deductible,
