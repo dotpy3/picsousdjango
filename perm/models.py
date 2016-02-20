@@ -54,7 +54,7 @@ class Article(core_models.PricedModel):
         rep = c.call('GESARTICLE', 'setProduct', active=True, alcool=False, cotisant=True,
                      components=[],
                      fun_id=NEMOPAY_FUNDATION_ID, image_path='', meta=dict(),
-                     name=self.nom, pack=False,
+                     name=self.nom + ' - ' + self.perm.nom, pack=False,
                      parent=NEMOPAY_ARTICLES_CATEGORY, prices=[],
                      prix=int(self.prix*100), stock=self.stock,
                      tva=self.tva, variable_price=False, virtual=False)
