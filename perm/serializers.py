@@ -23,7 +23,7 @@ ArticleListSerializer = ArticleSerializer.many_init
 
 class PermWithArticleSerializer(serializers.ModelSerializer):
     article_set = ArticleListSerializer()
-    facture_set = facture_serializers.FactureRecueListSerializer()
+    facturerecue_set = facture_serializers.FactureRecueListSerializer()
 
     class Meta:
         model = perm_models.Perm
