@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from facture import serializers as facture_serializers
 from perm import models as perm_models
 
 
@@ -22,6 +23,7 @@ ArticleListSerializer = ArticleSerializer.many_init
 
 class PermWithArticleSerializer(serializers.ModelSerializer):
     article_set = ArticleListSerializer()
+    facture_set = FactureRecueListSerializer()
 
     class Meta:
         model = perm_models.Perm

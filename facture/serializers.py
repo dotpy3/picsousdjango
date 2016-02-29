@@ -8,6 +8,9 @@ class FactureRecueSerializer(serializers.ModelSerializer):
         model = facture_models.FactureRecue
 
 
+FactureRecueListSerializer = FactureRecueSerializer.many_init
+
+
 class CategorieFactureRecueSerializer(serializers.ModelSerializer):
     class Meta:
         model = facture_models.CategorieFactureRecue
