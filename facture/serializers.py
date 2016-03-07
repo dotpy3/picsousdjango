@@ -26,13 +26,16 @@ class FactureEmiseRowSerializer(serializers.ModelSerializer):
         model = facture_models.FactureEmiseRow
 
 
+FactureEmiseRowListSerializer = FactureEmiseRowSerializer.many_init
+
+
 class ChequeSerializer(serializers.ModelSerializer):
     class Meta:
         model = facture_models.Cheque
 
 
 class FactureEmiseWithRowsSerializer(serializers.ModelSerializer):
-    factureemiserow_set = FactureEmiseRowSerializer()
+    factureemiserow_set = FactureEmiseRowListSerializer()
 
     class Meta:
         model = facture_models.FactureEmise
