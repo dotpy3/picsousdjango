@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
     url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
     url(r'^createpayutcarticle/(?P<id>\d+)/$', perm_views.create_payutc_article),
+    url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
     url(r'^connexion$', utcaccounts_views.connexion_cas_api),
     url(r'^getmyrights$', utcaccounts_views.get_my_rights),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))

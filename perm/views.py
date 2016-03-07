@@ -84,6 +84,14 @@ class UpdateArticleViewSet(viewsets.GenericViewSet):
 
 @api_view(['GET'])
 @renderer_classes((JSONRenderer, ))
+def get_article_sales(request, id):
+    a = perm_models.Article.objects.get(pk=id)
+    a.update_ventes()
+    a.get_fresh()
+    return Response(a.ventes)
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer, ))
 def create_payutc_article(request, id):
     article = perm_models.Article.objects.get(pk=id)
     article.create_payutc_article()

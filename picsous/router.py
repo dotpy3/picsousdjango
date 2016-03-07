@@ -13,7 +13,6 @@ router.register(r'periodetva', core_views.PeriodeTVAViewset)
 # Perms
 router.register(r'perms', perm_views.PermViewSet)
 router.register(r'articles', perm_views.ArticleViewSet)
-router.register(r'updateArticle', perm_views.UpdateArticleViewSet)
 
 # Factures
 router.register(r'facturesRecues', facture_views.FactureRecueViewSet)
