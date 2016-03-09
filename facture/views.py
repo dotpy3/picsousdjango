@@ -26,7 +26,7 @@ class FactureRecueViewSet(viewsets.ModelViewSet):
 class CategorieFactureRecueViewSet(viewsets.ModelViewSet):
 
     queryset = facture_models.CategorieFactureRecue.objects.all()
-    serializer_class = facture_serializers.FactureRecueSerializer
+    serializer_class = facture_serializers.CategorieFactureRecueSerializer
 
 
 class FactureEmiseViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
