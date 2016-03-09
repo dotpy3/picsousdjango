@@ -4,6 +4,7 @@ from facture import models as facture_models
 
 
 class FactureRecueSerializer(serializers.ModelSerializer):
+    personne_a_rembourser = serializers.CharField(required=False, allow_blank=True)
     class Meta:
         model = facture_models.FactureRecue
 
