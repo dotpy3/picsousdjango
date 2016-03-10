@@ -37,31 +37,9 @@ class BugReport(models.Model):
     content = models.TextField()
 
 
-class Periode(models.Model):
+class PeriodeTVA(models.Model):
     debut = models.DateField()
     fin = models.DateField()
-
-    class Meta:
-        abstract = True
-
-
-class Semestre(Periode):
-    SEMESTRE_PRINTEMPS = 'P'
-    SEMESTRE_AUTOMNE = 'A'
-
-    SEMESTRE_CHOICES = (
-        (SEMESTRE_PRINTEMPS, 'Printemps'),
-        (SEMESTRE_AUTOMNE, 'Automne'),
-    )
-
-    semestre = models.CharField(max_length=1, choices=SEMESTRE_CHOICES)
-    annee = models.IntegerField()
-
-    class Meta:
-        abstract = False
-
-
-class PeriodeTVA(Periode):
     PERIODE_NON_DECLAREE = 'N'
     PERIODE_DECLAREE = 'D'
 
