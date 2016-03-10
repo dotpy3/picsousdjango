@@ -2,12 +2,12 @@ from rest_framework import serializers
 from core import models as core_models
 
 
-class BugReportSerializer(serializers.Serializer):
+class BugReportSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = core_models.BugReport
 
 
-class PeriodeTVASerializer(serializers.Serializer):
+class PeriodeTVASerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = core_models.PeriodeTVA

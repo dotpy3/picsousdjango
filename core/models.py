@@ -26,8 +26,8 @@ class BugReport(models.Model):
 
     STATE_CHOICES = (
         (STATE_NOT_RESOLVED, 'Non résolu'),
-        (STATE_IN_PROGRESS, 'Non résolu'),
-        (STATE_RESOLVED, 'Non résolu'),
+        (STATE_IN_PROGRESS, 'En cours'),
+        (STATE_RESOLVED, 'Terminé'),
     )
 
     state = models.CharField(max_length=1, choices=STATE_CHOICES)
