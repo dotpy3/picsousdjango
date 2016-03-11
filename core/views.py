@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from core import models as core_models
 from core import serializers as core_serializers
+from core.services import payutc
 
 
 class BugReportViewset(viewsets.ModelViewSet):
@@ -17,3 +18,13 @@ class PeriodeTVAViewset(viewsets.ModelViewSet):
     """
     queryset = core_models.PeriodeTVA.objects.all()
     serializer_class = core_serializers.PeriodeTVASerializer
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer, ))
+def autocomplete(request, query):
+    c = payutc.Client()
+    c.loginApp()
+    c.loginBadge()
+
+    return Response(c.call('TRESO', 'userAutocomplete', queryString=query))

@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 
 from utcaccounts.urls import urlpatterns as utcaccounts_urlpatterns
 
+from core import views as core_views
 from facture import views as facture_views
 from perm import views as perm_views
 from utcaccounts import views as utcaccounts_views
@@ -14,6 +15,7 @@ urlpatterns = [
     url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
     url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
+    url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
     url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
     url(r'^createpayutcarticle/(?P<id>\d+)/$', perm_views.create_payutc_article),
     url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
