@@ -15,7 +15,7 @@
 					Rue Roger Coutollenc<br />
 					60200 COMPIEGNE<br />
 					Siret 397776 725 00012</p>
-					<p><strong>Objet : Convention de partenariat avec l'association {{ perm.nom | upper }}</strong><br />
+					<p><strong>Objet : Convention de partenariat avec {% if perm.asso %}l'association{% else %}le groupe{% endif %} {{ perm.nom | upper }}</strong><br />
 					Responsable du partenariat : {{ perm.nom_resp }} {% if perm.role %}({{ perm.role }}){% endif %}<br />
 					Adresse mail du responsable : {{ perm.mail_resp }}<br />
 					Téléphone du responsable : {{ perm.tel_resp }}</p>
