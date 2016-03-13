@@ -11,6 +11,7 @@ class SimplePermSerializer(serializers.ModelSerializer):
 
 
 class FactureRecueSerializer(serializers.ModelSerializer):
+    cheque = serializers.IntegerField()
     personne_a_rembourser = serializers.CharField(required=False, allow_blank=True)
     class Meta:
         model = facture_models.FactureRecue
