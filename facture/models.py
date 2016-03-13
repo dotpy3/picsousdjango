@@ -11,6 +11,19 @@ class CategorieFactureRecue(models.Model):
     code = models.CharField(max_length=1)
 
 
+class FactureRecue(core_models.PricedModel):
+    perm = models.ForeignKey(perm_models.Perm, null=True, default=None)
+    categorie = models.ForeignKey(CategorieFactureRecue, null=True)
+    nom_entreprise = models.CharField(max_length=255)
+    date = models.DateField()
+    date_paiement = models.DateField(null=True, default=None)
+    date_remboursement = models.DateField(null=True, default=None)
+    moyen_paiement = models.CharField(null=True, default=None, max_length=255)
+    personne_a_rembourser = models.CharField(null=True, default=None, max_length=255)
+    immobilisation = models.BooleanField(default=False)
+    remarque = models.TextField(null=True, default=None)
+
+
 class Cheque(models.Model):
     CHEQUE_ENCAISSE = 'E'
     CHEQUE_ANNULE = 'A'
@@ -27,20 +40,7 @@ class Cheque(models.Model):
     state = models.CharField(max_length=1, choices=CHEQUE_STATES)
     destinataire = models.CharField(max_length=255, null=True, default=None)
     commentaire = models.TextField(null=True, default=None)
-
-
-class FactureRecue(core_models.PricedModel):
-    perm = models.ForeignKey(perm_models.Perm, null=True, default=None)
-    categorie = models.ForeignKey(CategorieFactureRecue, null=True)
-    nom_entreprise = models.CharField(max_length=255)
-    date = models.DateField()
-    date_paiement = models.DateField(null=True, default=None)
-    date_remboursement = models.DateField(null=True, default=None)
-    moyen_paiement = models.CharField(null=True, default=None, max_length=255)
-    personne_a_rembourser = models.CharField(null=True, default=None, max_length=255)
-    immobilisation = models.BooleanField(default=False)
-    remarque = models.TextField(null=True, default=None)
-    cheque = models.ForeignKey(Cheque, null=True)
+    cheque = models.ForeignKey(FactureRecue, null=True)
 
 
 class FactureEmise(models.Model):
