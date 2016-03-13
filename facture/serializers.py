@@ -10,8 +10,11 @@ class SimplePermSerializer(serializers.ModelSerializer):
         fields = ('id', 'nom')
 
 
+IntegerListSerializer = serializers.IntegerField.many_init
+
+
 class FactureRecueSerializer(serializers.ModelSerializer):
-    cheque = serializers.IntegerField()
+    cheque_set = IntegerListSerializer()
     personne_a_rembourser = serializers.CharField(required=False, allow_blank=True)
     class Meta:
         model = facture_models.FactureRecue
