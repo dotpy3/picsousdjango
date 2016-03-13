@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
 from facture import models as facture_models
+from perm import models as perm_models
+
+
+class SimplePermSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = perm_models.Perm
+        fields = ('id', 'nom')
 
 
 class FactureRecueSerializer(serializers.ModelSerializer):
