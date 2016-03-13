@@ -40,7 +40,7 @@ class Cheque(models.Model):
     state = models.CharField(max_length=1, choices=CHEQUE_STATES)
     destinataire = models.CharField(max_length=255, null=True, default=None)
     commentaire = models.TextField(null=True, default=None)
-    cheque = models.ForeignKey(FactureRecue, null=True)
+    facturerecue = models.ForeignKey(FactureRecue, null=True)
 
 
 class FactureEmise(models.Model):
