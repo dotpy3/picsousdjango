@@ -10,11 +10,17 @@ class SimplePermSerializer(serializers.ModelSerializer):
         fields = ('id', 'nom')
 
 
-IntegerListSerializer = serializers.IntegerField.many_init
+class ChequeSerializer(serializers.ModelSerializer):
+    facturerecue = serializers.IntegerField()
+    class Meta:
+        model = facture_models.Cheque
+
+
+ChequeListSerializer = ChequeSerializer.many_init
 
 
 class FactureRecueSerializer(serializers.ModelSerializer):
-    cheque_set = IntegerListSerializer()
+    cheque_set = ChequeListSerializer()
     personne_a_rembourser = serializers.CharField(required=False, allow_blank=True)
     class Meta:
         model = facture_models.FactureRecue
@@ -39,12 +45,6 @@ class FactureEmiseRowSerializer(serializers.ModelSerializer):
 
 
 FactureEmiseRowListSerializer = FactureEmiseRowSerializer.many_init
-
-
-class ChequeSerializer(serializers.ModelSerializer):
-    facturerecue = serializers.IntegerField()
-    class Meta:
-        model = facture_models.Cheque
 
 
 class FactureEmiseWithRowsSerializer(serializers.ModelSerializer):
