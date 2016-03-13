@@ -38,7 +38,7 @@ FactureEmiseRowListSerializer = FactureEmiseRowSerializer.many_init
 
 
 class ChequeSerializer(serializers.ModelSerializer):
-    facturerecue_set = FactureRecueListSerializer()
+    facturerecue = serializers.IntegerField()
     class Meta:
         model = facture_models.Cheque
 
