@@ -11,7 +11,6 @@ class SimplePermSerializer(serializers.ModelSerializer):
 
 
 class ChequeSerializer(serializers.ModelSerializer):
-    facturerecue = serializers.IntegerField()
     class Meta:
         model = facture_models.Cheque
 
