@@ -98,6 +98,7 @@ def send_convention(request, id):
 @renderer_classes((JSONRenderer, ))
 def send_justificatif(request, id):
     perm = perm_models.Perm.objects.get(pk=id)
+    info = perm.get_justificatif_information()
     justificatif_template = get_template('justificatif_paiement.html')
     justificatif_context = {
       'perm': perm, 'articles': info['perm_articles'], 'total_ht': info['total_ht'],
