@@ -35,6 +35,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 def convention_partenariat(request, id):
     perm = perm_models.Perm.objects.get(pk=id)
     info = perm.get_convention_information()
+    print(repr(info['articles']))
     return render(request, 'convention_partenariat.html',
                   {'perm': perm, 'articles': info['articles'],
                    'montant': round(perm.get_montant_deco_max(), 2),
