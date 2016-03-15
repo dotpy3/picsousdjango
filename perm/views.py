@@ -104,7 +104,7 @@ def send_justificatif(request, id):
       'perm': perm, 'articles': info['perm_articles'], 'total_ht': info['total_ht'],
       'total_ttc': info['total_ttc'], 'tva_amounts': info['tva_amounts'], 'mail': True,
     }
-    context_content = convention_template.render(justificatif_context)
+    context_content = justificatif_template.render(justificatif_context)
     send_mail('Justificatif paiement Pic\'Asso', 'Pour lire ce message, merci d\'utiliser un navigateur ou un client mail compatible HTML.',
       DEFAULT_FROM_EMAIL, [perm.mail_resp], html_message=context_content)
     return Response(True)
