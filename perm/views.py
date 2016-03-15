@@ -37,7 +37,8 @@ def convention_partenariat(request, id):
     info = perm.get_convention_information()
     return render(request, 'convention_partenariat.html',
                   {'perm': perm, 'articles': info['articles'],
-                   'montant': round(perm.get_montant_deco_max(), 2)})
+                   'montant': round(perm.get_montant_deco_max(), 2),
+                   'mail': False})
 
 
 def justificatif_paiement(request, id):
@@ -104,9 +105,10 @@ def send_convention(request, id):
     convention_context = {
       'perm': perm,
       'articles': perm.get_convention_information()['articles'],
-      'montant': round(perm.get_montant_deco_max(), 2)
+      'montant': round(perm.get_montant_deco_max(), 2),
+      'mail': True,
     }
     context_content = convention_template.render(convention_context)
     send_mail('Convention Perm Pic\'Asso', 'Pour lire ce message, merci d\'utiliser un navigateur ou un client mail compatible HTML.',
       DEFAULT_FROM_EMAIL, [perm.mail_resp], html_message=context_content)
-    return Response('coucou')
+    return Response(True)

@@ -52,14 +52,14 @@
                     <p>Le rachat de la décoration de la permanence est limité à {{ montant }}€, et doit être accompagné d'une facture à l'ordre de BDE-UTC Pic'Asso.</p>
 				</div>
 			</div>
-			<div class="row" style="margin-top:25px;">
+			{% if not mail %}<div class="row" style="margin-top:25px;">
 				<div class="col-xs-4 col-xs-offset-2">
 					<p class="pull-right">Signature du représentant du BDE-UTC Pic'Asso</p>
 				</div>
 				<div class="col-xs-4">
 					<p class="pull-right">Signature du représentant du partenaire</p>
 				</div>
-			</div>
+			</div>{% endif %}
 		</div>
 	</body>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700' rel='stylesheet' type='text/css'>
