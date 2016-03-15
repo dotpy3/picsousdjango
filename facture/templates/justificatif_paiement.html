@@ -23,9 +23,9 @@
 					<p>Date de la permanence : {{ perm.date | date:'d/m/Y' }}<br />
 					Période : {{ perm.periode | period }}</p>
 				</div>
-				<div class="col-xs-4">
+				{% if not mail %}<div class="col-xs-4">
 					<img class="pull-right" src="{% static 'logo_monochrome.png' %}" />
-				</div>
+				</div>{% endif %}
 			</div>
 			<div class="row" style="margin-top:15px">
 				<div class="col-md-12">
@@ -75,14 +75,14 @@
                     </table>
                 </div>
             </div>
-			<div class="row">
+			{% if not mail %}<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
 					<p class="pull-right">Signature du représentant du BDE-UTC Pic'Asso</p>
 				</div>
 				<div class="col-xs-4">
 					<p class="pull-right">Signature du représentant du partenaire</p>
 				</div>
-			</div>
+			</div>{% endif %}
 		</div>
 	</body>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700' rel='stylesheet' type='text/css'>

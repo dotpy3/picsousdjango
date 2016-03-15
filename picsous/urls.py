@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^sendconvention/(?P<id>\d+)$', perm_views.send_convention),
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
     url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
+    url(r'^sendjustificatif/(?P<id>\d+)$', perm_views.send_justificatif),
     url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
     url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
     url(r'^createpayutcarticle/(?P<id>\d+)/$', perm_views.create_payutc_article),

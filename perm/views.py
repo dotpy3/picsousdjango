@@ -43,31 +43,11 @@ def convention_partenariat(request, id):
 
 def justificatif_paiement(request, id):
     perm = perm_models.Perm.objects.get(pk=id)
-    articles = perm.article_set.all()
-    perm_articles = list()
-    tva = Set()
-    for article in articles:
-        article_info = {'nom': article.nom, 'prix': article.prix,
-                        'ventes': article.ventes, 'tva': article.tva}
-        tva.add(article.tva)
-        article_info['total'] = article_info['prix'] * article_info['ventes']
-        perm_articles.append(article_info)
-    tva_amounts = list()
-    total_ht = round(sum([article.get_price_without_taxes()*article.ventes
-                          for article in articles]), 2)
-    for tva_type in tva:
-        tva_amounts.append({'tva': tva_type,
-                            'amount': round(sum([article.get_total_taxes() *
-                                                 article.ventes for article
-                                                 in articles
-                                                 if article.tva == tva_type]),
-                                            2)})
-    total_ttc = round(sum([article.prix*article.ventes
-                           for article in articles]), 2)
+    info = perm.get_justificatif_information()
     return render(request, 'justificatif_paiement.html',
-                  {'perm': perm, 'articles': perm_articles,
-                   'total_ht': total_ht, 'total_ttc': total_ttc,
-                   'tva_amounts': tva_amounts})
+                  {'perm': perm, 'articles': info['perm_articles'],
+                   'total_ht': info['total_ht'], 'total_ttc': info['total_ttc'],
+                   'tva_amounts': info['tva_amounts'], 'mail': False})
 
 
 class UpdateArticleViewSet(viewsets.GenericViewSet):
@@ -110,5 +90,20 @@ def send_convention(request, id):
     }
     context_content = convention_template.render(convention_context)
     send_mail('Convention Perm Pic\'Asso', 'Pour lire ce message, merci d\'utiliser un navigateur ou un client mail compatible HTML.',
+      DEFAULT_FROM_EMAIL, [perm.mail_resp], html_message=context_content)
+    return Response(True)
+
+
+@api_view(['POST'])
+@renderer_classes((JSONRenderer, ))
+def send_justificatif(request, id):
+    perm = perm_models.Perm.objects.get(pk=id)
+    justificatif_template = get_template('justificatif_paiement.html')
+    justificatif_context = {
+      'perm': perm, 'articles': info['perm_articles'], 'total_ht': info['total_ht'],
+      'total_ttc': info['total_ttc'], 'tva_amounts': info['tva_amounts'], 'mail': True,
+    }
+    context_content = convention_template.render(justificatif_context)
+    send_mail('Justificatif paiement Pic\'Asso', 'Pour lire ce message, merci d\'utiliser un navigateur ou un client mail compatible HTML.',
       DEFAULT_FROM_EMAIL, [perm.mail_resp], html_message=context_content)
     return Response(True)
