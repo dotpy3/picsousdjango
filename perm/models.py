@@ -36,6 +36,20 @@ class Perm(models.Model):
         else:
             return 20
 
+    def get_convention_information(self):
+        articles = self.article_set.all()
+        perm_articles = list()
+        for article in articles:
+            perm_articles.append({'nom': article.nom, 'stock': article.stock,
+                                  'prixTTC': article.prix,
+                                  'prixHT': article.get_price_without_taxes(),
+                                  'TVA': article.tva})
+        return {
+            'perm': self,
+            'articles': articles,
+            'perm_articles': perm_articles,
+        }
+
 
 class Article(core_models.PricedModel):
     id_payutc = models.IntegerField(null=True, default=None)

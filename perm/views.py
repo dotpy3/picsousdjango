@@ -1,12 +1,16 @@
+from sets import Set
+
 from django.shortcuts import render
-from core import viewsets as core_viewsets
-from perm import models as perm_models
-from perm import serializers as perm_serializers
+from django.template.loader import get_template
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from sets import Set
+
+from core import viewsets as core_viewsets
+from perm import models as perm_models
+from perm import serializers as perm_serializers
 
 
 class PermViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
@@ -28,15 +32,9 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
 def convention_partenariat(request, id):
     perm = perm_models.Perm.objects.get(pk=id)
-    articles = perm.article_set.all()
-    perm_articles = list()
-    for article in articles:
-        perm_articles.append({'nom': article.nom, 'stock': article.stock,
-                              'prixTTC': article.prix,
-                              'prixHT': article.get_price_without_taxes(),
-                              'TVA': article.tva})
+    info = perm.get_convention_information()
     return render(request, 'convention_partenariat.html',
-                  {'perm': perm, 'articles': perm_articles,
+                  {'perm': perm, 'articles': info['articles'],
                    'montant': round(perm.get_montant_deco_max(), 2)})
 
 
@@ -94,3 +92,17 @@ def create_payutc_article(request, id):
     article = perm_models.Article.objects.get(pk=id)
     article.create_payutc_article()
     return Response(True)
+
+
+@api_view(['POST'])
+@renderer_classes((JSONRenderer, ))
+def send_convention(request, id):
+    perm = perm_models.Perm.objects.get(pk=id)
+    convention_template = get_template('convention_partenariat.html')
+    convention_context = {
+      'perm': perm,
+      'articles': perm.get_convention_information()['articles'],
+      'montant': round(perm.get_montant_deco_max(), 2)
+    }
+    context_content = convention_template.render(convention_context)
+    return Response('coucou')
