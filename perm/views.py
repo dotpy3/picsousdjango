@@ -1,5 +1,6 @@
 from sets import Set
 
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.template.loader import get_template
 
@@ -11,6 +12,7 @@ from rest_framework.response import Response
 from core import viewsets as core_viewsets
 from perm import models as perm_models
 from perm import serializers as perm_serializers
+from picsous.settings import DEFAULT_FROM_EMAIL
 
 
 class PermViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
@@ -105,4 +107,6 @@ def send_convention(request, id):
       'montant': round(perm.get_montant_deco_max(), 2)
     }
     context_content = convention_template.render(convention_context)
+    send_mail('Convention Perm Pic\'Asso', 'Pour lire ce message, merci d\'utiliser un navigateur ou un client mail compatible HTML.',
+      DEFAULT_FROM_EMAIL, [perm.mail_resp], html_message=context_content)
     return Response('coucou')
