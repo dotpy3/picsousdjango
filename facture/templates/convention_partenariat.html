@@ -22,9 +22,9 @@
 					<p>Date du jour : {{ perm.date | date:'d/m/Y' }}<br />
 					Période : {{ perm.periode | period }}</p>
 				</div>
-				<div class="col-xs-4">
+				{% if not mail %}<div class="col-xs-4">
 					<img class="pull-right" src="{% static 'logo_monochrome.png' %}" />
-				</div>
+				</div>{% endif %}
 			</div>
 			<div class="row" style="margin-top:15px">
 				<div class="col-md-12">
