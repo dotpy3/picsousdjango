@@ -75,7 +75,7 @@ class Perm(models.Model):
         total_ttc = round(sum([article.prix*article.ventes
                                for article in articles]), 2)
         return {
-            'articles': perm_articles,
+            'perm_articles': perm_articles,
             'total_ht': total_ht,
             'total_ttc': total_ttc,
             'tva_amounts': tva_amounts,
