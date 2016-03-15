@@ -13,6 +13,7 @@ from router import router
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
+    url(r'^sendconvention/(?P<id>\d+)$', perm_views.send_convention),
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
     url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
     url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
