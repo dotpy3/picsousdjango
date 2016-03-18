@@ -12,6 +12,7 @@ class CategorieFactureRecue(models.Model):
 
 
 class FactureRecue(core_models.PricedModel):
+
     perm = models.ForeignKey(perm_models.Perm, null=True, default=None)
     categorie = models.ForeignKey(CategorieFactureRecue, null=True)
     nom_entreprise = models.CharField(max_length=255)

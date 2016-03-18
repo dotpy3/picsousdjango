@@ -18,6 +18,14 @@ class ChequeSerializer(serializers.ModelSerializer):
 ChequeListSerializer = ChequeSerializer.many_init
 
 
+class SimpleFactureRecueSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    class Meta:
+        model = facture_models.FactureRecue
+
+SimpleFactureRecueListSerializer = SimpleFactureRecueSerializer.many_init
+
+
 class FactureRecueSerializer(serializers.ModelSerializer):
     cheque_set = ChequeListSerializer()
     personne_a_rembourser = serializers.CharField(required=False, allow_blank=True)

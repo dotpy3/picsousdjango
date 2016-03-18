@@ -8,8 +8,20 @@ from perm import views as perm_views
 from utcaccounts import views as utcaccounts_views
 from router import router
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
+"""
+C'est ici, dans les URLs de l'application, que toutes les routes sont déclarées.
+
+C'est la variable urlpatterns qui les regroupe, qui est ensuite récupérée par Django
+pour en tirer les URLS.
+
+Les URLs sont déclarées :
+- individuellement, pour les routes qui effectuent des actions précises (envoi de
+convention, affichage de documents, génération d'article PayUTC...)
+- récupérées par le routeur, pour les routes générées par Django REST Framework. C'est
+le include qui est utilisé, et qui récupère auprès du routeur toutes les routes
+créées.
+"""
+
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
