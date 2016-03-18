@@ -37,7 +37,7 @@ class Perm(models.Model):
     role = models.CharField(null=True, default=None, max_length=255)
     date = models.DateField()
     periode = models.CharField(choices=PERIOD_VALUES, max_length=1)
-    state = models.CharField(choices=PERM_STATE_VALUES, max_length=1)
+    state = models.CharField(choices=PERM_STATE_VALUES, max_length=1, default='N')
     montantTTCMaxAutorise = models.FloatField(null=True, default=None)
     remarque = models.TextField(null=True, default=None)
     
