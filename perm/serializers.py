@@ -5,6 +5,7 @@ from perm import models as perm_models
 
 
 class PermSerializer(serializers.ModelSerializer):
+    facturerecue_set = facture_serializers.SimpleFactureRecueListSerializer()
     class Meta:
         model = perm_models.Perm
 
@@ -13,7 +14,6 @@ class ArticleSerializer(serializers.ModelSerializer):
     ventes = serializers.IntegerField(read_only=True)
     ventes_last_update = serializers.DateTimeField(read_only=True)
     id = serializers.IntegerField(read_only=True)
-    facturerecue_set = facture_serializers.SimpleFactureRecueListSerializer()
 
     class Meta:
         model = perm_models.Article
