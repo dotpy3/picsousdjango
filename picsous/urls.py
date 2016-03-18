@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls import url, include
 
 from utcaccounts.urls import urlpatterns as utcaccounts_urlpatterns

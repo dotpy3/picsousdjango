@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from rest_framework import routers
 from core import views as core_views
 from facture import views as facture_views
