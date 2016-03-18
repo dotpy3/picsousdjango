@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from sets import Set
 
 from django.db import models
