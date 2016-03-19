@@ -5,7 +5,7 @@ from perm import models as perm_models
 
 
 class PermSerializer(serializers.ModelSerializer):
-    facturerecue_set = facture_serializers.SimpleFactureRecueListSerializer()
+    facturerecue_set = facture_serializers.SimpleFactureRecueListSerializer(read_only=True, required=False)
     class Meta:
         model = perm_models.Perm
 
