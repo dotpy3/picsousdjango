@@ -22,7 +22,7 @@ class SimpleFactureRecueSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     class Meta:
         model = facture_models.FactureRecue
-        fields = ('id')
+        fields = ('id', )
 
 SimpleFactureRecueListSerializer = SimpleFactureRecueSerializer.many_init
 
