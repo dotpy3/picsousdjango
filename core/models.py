@@ -5,6 +5,15 @@ from __future__ import unicode_literals
 from django.db import models
 
 class UserRight(models.Model):
+    """
+    Modèle de gestion des droits utilisateurs.
+    On distingue plusieurs types de droits, à travers la valeur de 'right'.
+    Par défaut, un utilisateur qui n'a aucun UserRight revient à un utilisateur
+    qui a un utilisateur qui a comme right 'USERRIGHT_NONE'
+
+    XXX : distinguer quelqu'un qui a tous les droits sur la tréso (type, l'équipe tréso)
+    de ceux qui tous les droits (type, l'équipe info).
+    """
     USERRIGHT_ALL = 'A'
     USERRIGHT_ARTICLES = 'P'
     USERRIGHT_NONE = 'N'
@@ -20,6 +29,10 @@ class UserRight(models.Model):
 
 
 class BugReport(models.Model):
+    """
+    Rapport de bug : les identifiants reporter sont relatifs au profil de celui qui
+    dépose le rapport de bug.
+    """
     STATE_NOT_RESOLVED = 'N'
     STATE_IN_PROGRESS = 'P'
     STATE_RESOLVED = 'R'
@@ -38,6 +51,9 @@ class BugReport(models.Model):
 
 
 class PeriodeTVA(models.Model):
+    """
+    Période de TVA.
+    """
     debut = models.DateField()
     fin = models.DateField()
     PERIODE_NON_DECLAREE = 'N'
@@ -55,6 +71,9 @@ class PeriodeTVA(models.Model):
 
 
 class PricedModel(models.Model):
+    """
+    Classe abstraite qui représente tout objet qui a un prix.
+    """
     tva = models.FloatField(default=0) # TVA en decimal, type 5.5, 20...
     prix = models.FloatField(default=0) # prix TTC
 

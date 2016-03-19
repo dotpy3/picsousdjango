@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from sets import Set
 
 from django.db import models
@@ -19,6 +21,14 @@ class Perm(models.Model):
         (PERIOD_SOIR, 'Soir'),
     )
 
+    PERM_TRAITEE = 'T'
+    PERM_NON_TRAITEE = 'N'
+
+    PERM_STATE_VALUES = (
+        (PERM_TRAITEE, 'Traitée'),
+        (PERM_NON_TRAITEE, 'Non traitée'),
+    )
+
     nom = models.CharField(max_length=255)
     asso = models.BooleanField(default=True)  # true if asso
     nom_resp = models.CharField(null=True, default=None, max_length=255)
@@ -27,9 +37,10 @@ class Perm(models.Model):
     role = models.CharField(null=True, default=None, max_length=255)
     date = models.DateField()
     periode = models.CharField(choices=PERIOD_VALUES, max_length=1)
+    state = models.CharField(choices=PERM_STATE_VALUES, max_length=1, default='N')
     montantTTCMaxAutorise = models.FloatField(null=True, default=None)
     remarque = models.TextField(null=True, default=None)
-
+    
     def get_montant_deco_max(self):
         if self.montantTTCMaxAutorise:
             return self.montantTTCMaxAutorise
