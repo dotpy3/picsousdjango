@@ -24,8 +24,8 @@ ArticleListSerializer = ArticleSerializer.many_init
 
 
 class PermWithArticleSerializer(serializers.ModelSerializer):
-    article_set = ArticleListSerializer()
-    facturerecue_set = facture_serializers.FactureRecueListSerializer()
+    article_set = ArticleListSerializer(read_only=True)
+    facturerecue_set = facture_serializers.FactureRecueListSerializer(read_only=True)
 
     class Meta:
         model = perm_models.Perm
