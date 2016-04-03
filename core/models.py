@@ -50,12 +50,18 @@ class BugReport(models.Model):
     content = models.TextField()
 
 
-class PeriodeTVA(models.Model):
+class TimeModel(models.Model):
+    class Meta:
+        abstract = True
+
+    debut = models.DateField()
+    fin = models.DateField()
+
+
+class PeriodeTVA(TimeModel):
     """
     Période de TVA.
     """
-    debut = models.DateField()
-    fin = models.DateField()
     PERIODE_NON_DECLAREE = 'N'
     PERIODE_DECLAREE = 'D'
 
