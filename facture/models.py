@@ -27,11 +27,13 @@ class FactureRecue(core_models.PricedModel):
 
 class Cheque(models.Model):
     CHEQUE_ENCAISSE = 'E'
+    CHEQUE_PENDING = 'P'
     CHEQUE_ANNULE = 'A'
     CHEQUE_CAUTION = 'C'
 
     CHEQUE_STATES = (
         (CHEQUE_ENCAISSE, 'Encaisse'),
+        (CHEQUE_PENDING, 'En cours'),
         (CHEQUE_ANNULE, 'Annulé'),
         (CHEQUE_CAUTION, 'Caution'),
     )
