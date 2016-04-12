@@ -1,5 +1,6 @@
 Django==1.8.5
-djangorestframework
+django-autocomplete-light
 django-cors-headers
 django-extensions
+djangorestframework
 requests

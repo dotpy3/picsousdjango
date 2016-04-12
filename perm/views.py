@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render
 from django.template.loader import get_template
 
+from dal import autocomplete
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
@@ -140,6 +142,15 @@ def send_convention(request, id):
     send_mail('Convention Perm Pic\'Asso', 'Pour lire ce message, merci d\'utiliser un navigateur ou un client mail compatible HTML.',
       DEFAULT_FROM_EMAIL, [perm.mail_resp], html_message=context_content)
     return Response(True)
+
+
+class PermNameAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.q:
+            return perm_models.Perm.objects.none()
+        qs = perm_models.Perm.objects.filter(nom__icontains=self.q)
+
+        return qs
 
 
 @api_view(['POST'])

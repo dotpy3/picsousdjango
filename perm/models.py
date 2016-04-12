@@ -40,6 +40,9 @@ class Perm(models.Model):
     state = models.CharField(choices=PERM_STATE_VALUES, max_length=1, default='N')
     montantTTCMaxAutorise = models.FloatField(null=True, default=None)
     remarque = models.TextField(null=True, default=None)
+
+    def __str__(self):
+        return self.nom
     
     def get_montant_deco_max(self):
         if self.montantTTCMaxAutorise:

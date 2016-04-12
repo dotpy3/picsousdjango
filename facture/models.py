@@ -8,12 +8,25 @@ from perm import models as perm_models
 
 class CategorieFactureRecue(models.Model):
     nom = models.CharField(max_length=255)
-    code = models.CharField(max_length=1)
+    code = models.CharField(max_length=1, unique=True)
 
 
 class FactureRecue(core_models.PricedModel):
 
+    FACTURE_A_PAYER = 'D'
+    FACTURE_A_REMBOURSER = 'R'
+    FACTURE_EN_ATTENTE = 'E'
+    FACTURE_PAYEE = 'P'
+
+    FACTURE_STATES = (
+        (FACTURE_A_PAYER, 'À payer'),
+        (FACTURE_A_REMBOURSER, 'À rembourser'),
+        (FACTURE_EN_ATTENTE, 'En attente'),
+        (FACTURE_PAYEE, 'Payée'),
+    )
+
     perm = models.ForeignKey(perm_models.Perm, null=True, default=None)
+    etat = models.CharField(max_length=1, choices=FACTURE_STATES, default=FACTURE_A_PAYER)
     categorie = models.ForeignKey(CategorieFactureRecue, null=True)
     nom_entreprise = models.CharField(max_length=255)
     date = models.DateField()
