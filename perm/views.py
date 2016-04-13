@@ -14,6 +14,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from core import viewsets as core_viewsets
+from facture import models as facture_models
 from perm import models as perm_models
 from perm import serializers as perm_serializers
 from picsous.settings import DEFAULT_FROM_EMAIL
@@ -120,6 +121,19 @@ def create_payutc_article(request, id):
     # Endpoint qui permet d'obtenir, pour un article de pk {id}, d'enregistrer l'article dans PayUTC.
     article = perm_models.Article.objects.get(pk=id)
     article.create_payutc_article()
+    return Response(True)
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer, ))
+def get_perm_sales(request, id):
+    p = perm_models.Perm.objects.get(pk=id)
+    return Response(p.get_justificatif_information())
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer, ))
+def delete_facture_recue(request, id):
+    fr = facture_models.FactureRecue.objects.get(pk=id)
+    fr.delete()
     return Response(True)
 
 

@@ -35,6 +35,8 @@ urlpatterns = [
     url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
     url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
     url(r'^createpayutcarticle/(?P<id>\d+)/$', perm_views.create_payutc_article),
+    url(r'^deletefacturerecue/(?P<id>\d+)/$', perm_views.delete_facture_recue),
+    url(r'^permsales/(?P<id>\d+)/$', perm_views.get_perm_sales),
     url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
     url(r'^connexion$', utcaccounts_views.connexion_cas_api),
     url(r'^getmyrights$', utcaccounts_views.get_my_rights),
