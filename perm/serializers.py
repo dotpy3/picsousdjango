@@ -10,6 +10,12 @@ class PermSerializer(serializers.ModelSerializer):
         model = perm_models.Perm
 
 
+class SimplePermSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = perm_models.Perm
+        fields = ('id', 'nom', 'date')
+
+
 class ArticleSerializer(serializers.ModelSerializer):
     ventes = serializers.IntegerField(read_only=True)
     ventes_last_update = serializers.DateTimeField(read_only=True)

@@ -29,9 +29,9 @@ SimpleFactureRecueListSerializer = SimpleFactureRecueSerializer.many_init
 
 class FactureRecueSerializer(serializers.ModelSerializer):
     cheque_set = ChequeListSerializer(required=False)
-    personne_a_rembourser = serializers.CharField(required=False, allow_blank=True)
-    date_paiement = serializers.DateField(required=False)
-    date_remboursement = serializers.DateField(required=False)
+    personne_a_rembourser = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    date_paiement = serializers.DateField(required=False, allow_null=True)
+    date_remboursement = serializers.DateField(required=False, allow_null=True)
     class Meta:
         model = facture_models.FactureRecue
 

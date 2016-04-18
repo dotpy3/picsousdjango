@@ -8,7 +8,7 @@ from django.template.loader import get_template
 
 from dal import autocomplete
 
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -51,6 +51,15 @@ class PermViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
     queryset = perm_models.Perm.objects.all()
     serializer_class = perm_serializers.PermSerializer
     single_serializer_class = perm_serializers.PermWithArticleSerializer
+
+
+class SimplePermViewSet(mixins.ListModelMixin, viewsets.GenericViewSet,
+                        mixins.RetrieveModelMixin):
+    """
+    Perm simple viewset: pour récupérer la liste des perms avec juste le nom et l'id
+    """
+    queryset = perm_models.Perm.objects.all()
+    serializer_class = perm_serializers.SimplePermSerializer
 
 
 class ArticleViewSet(viewsets.ModelViewSet):

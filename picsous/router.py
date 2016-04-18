@@ -40,6 +40,7 @@ router.register(r'periodetva', core_views.PeriodeTVAViewset)
 
 # Perms
 router.register(r'perms', perm_views.PermViewSet)
+router.register(r'permnames', perm_views.SimplePermViewSet)
 router.register(r'articles', perm_views.ArticleViewSet)
 
 # Factures
