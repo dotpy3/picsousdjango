@@ -42,7 +42,7 @@ class Perm(models.Model):
     remarque = models.TextField(null=True, default=None)
 
     def __str__(self):
-        return self.nom
+        return self.nom + ' (' + self.date.strftime('%d/%m') + ')'
     
     def get_montant_deco_max(self):
         if self.montantTTCMaxAutorise:
