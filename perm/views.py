@@ -9,7 +9,8 @@ from django.template.loader import get_template
 from dal import autocomplete
 
 from rest_framework import mixins, viewsets
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, permission_classes, renderer_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -51,6 +52,7 @@ class PermViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
     queryset = perm_models.Perm.objects.all()
     serializer_class = perm_serializers.PermSerializer
     single_serializer_class = perm_serializers.PermWithArticleSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class SimplePermViewSet(mixins.ListModelMixin, viewsets.GenericViewSet,
@@ -60,6 +62,7 @@ class SimplePermViewSet(mixins.ListModelMixin, viewsets.GenericViewSet,
     """
     queryset = perm_models.Perm.objects.all()
     serializer_class = perm_serializers.SimplePermSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -68,6 +71,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     """
     queryset = perm_models.Article.objects.all()
     serializer_class = perm_serializers.ArticleSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 def convention_partenariat(request, id):
@@ -108,6 +112,7 @@ class UpdateArticleViewSet(viewsets.GenericViewSet):
 
     queryset = perm_models.Article.objects.all()
     serializer_class = perm_serializers.ArticleSerializer
+    permission_classes = (IsAuthenticated,)
 
     def update(self, request, *args, **kwargs):
         id = kwargs.get('id')
@@ -118,6 +123,7 @@ class UpdateArticleViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((JSONRenderer, ))
 def get_article_sales(request, id):
     # Endpoint qui permet d'obtenir, pour un article de pk {id}, d'obtenir les ventes de l'article.
@@ -125,6 +131,7 @@ def get_article_sales(request, id):
     return Response(a.update_ventes())
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((JSONRenderer, ))
 def create_payutc_article(request, id):
     # Endpoint qui permet d'obtenir, pour un article de pk {id}, d'enregistrer l'article dans PayUTC.
@@ -133,12 +140,14 @@ def create_payutc_article(request, id):
     return Response(True)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((JSONRenderer, ))
 def get_perm_sales(request, id):
     p = perm_models.Perm.objects.get(pk=id)
     return Response(p.get_justificatif_information())
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((JSONRenderer, ))
 def delete_facture_recue(request, id):
     fr = facture_models.FactureRecue.objects.get(pk=id)
@@ -147,6 +156,7 @@ def delete_facture_recue(request, id):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((JSONRenderer, ))
 def send_convention(request, id):
     """
@@ -168,6 +178,9 @@ def send_convention(request, id):
 
 
 class PermNameAutocomplete(autocomplete.Select2QuerySetView):
+
+    permission_classes = (IsAuthenticated,)
+
     def get_queryset(self):
         if not self.q:
             return perm_models.Perm.objects.none()
@@ -177,6 +190,7 @@ class PermNameAutocomplete(autocomplete.Select2QuerySetView):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((JSONRenderer, ))
 def send_justificatif(request, id):
     """

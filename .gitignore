@@ -1,2 +1,3 @@
 picsous/local_settings.py
-
+.idea
+*.pyc

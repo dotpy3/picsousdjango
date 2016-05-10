@@ -1,5 +1,6 @@
 # coding: utf8
-#
+""" Modeles de base de picsous """
+
 from __future__ import unicode_literals
 
 from django.db import models
@@ -51,7 +52,9 @@ class BugReport(models.Model):
 
 
 class TimeModel(models.Model):
-    class Meta:
+    """ Modèle représentant une période temporelle """
+    class Meta(object):
+        """ Représentation en DB """
         abstract = True
 
     debut = models.DateField()
@@ -73,6 +76,7 @@ class PeriodeTVA(TimeModel):
     state = models.CharField(max_length=1, choices=PERIODE_CHOICES, default='N')
 
     class Meta:
+        """ Représentation en DB """
         abstract = False
 
 
@@ -84,10 +88,13 @@ class PricedModel(models.Model):
     prix = models.FloatField(default=0) # prix TTC
 
     def get_price_without_taxes(self):
+        """ À partir du prix TTC sauvegardé de l'objet, obtenir le prix HT """
         return round(self.prix * (100 / (100 + self.tva)), 2)
 
     def get_total_taxes(self):
+        """ À partir du prix TTC sauvegardé de l'objet, obtenir la TVA """
         return round(self.prix - self.get_price_without_taxes(), 2)
 
     class Meta:
+        """ Représentation en DB """
         abstract = True
