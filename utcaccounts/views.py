@@ -69,8 +69,10 @@ def connexion_cas_api(request):
 def get_my_rights(request):
     """ Obtenir les droits utilisateurs """
     if not request.user.is_authenticated():
-        return Response('NONE')
-    if request.user.is_staff:
+        return Response('NOT CONNECTED')
+    if request.user.is_superuser:
         return Response('ALL')
-    else:
+    elif request.user.is_staff:
         return Response('ARTICLES')
+    else:
+        return Response('NONE')
