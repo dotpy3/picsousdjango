@@ -4,8 +4,9 @@ import requests
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 
-from picsous.settings import NEMOPAY_API_URL, NEMOPAY_SYSTEM_ID, NEMOPAY_API_KEY, NEMOPAY_LOGIN_SERVICE,\
-    NEMOPAY_CONNECTION_UID, NEMOPAY_CONNECTION_PIN
+from constance import config as live_config
+
+from picsous.settings import NEMOPAY_SYSTEM_ID, NEMOPAY_LOGIN_SERVICE
 
 class NemopayClientException(Exception):
     pass
@@ -28,24 +29,24 @@ class Client:
 
     def loginCas(self, ticket, service):
         url = self._call_url(NEMOPAY_LOGIN_SERVICE, 'loginCas') + '?system_id=' + NEMOPAY_SYSTEM_ID
-        r = requests.post(url, data={ 'ticket': ticket, 'service': service })
+        r = requests.post(url, json={'ticket': ticket, 'service': service})
         sessionid = r.cookies.get('sessionid')
         return (str(r.text.strip('"')), sessionid)
 
     def loginApp(self, service=NEMOPAY_LOGIN_SERVICE):
-        self.SESSION_ID = str(self.call(service, 'loginApp', key=NEMOPAY_API_KEY)['sessionid'])
+        self.SESSION_ID = str(self.call(service, 'loginApp', key=live_config.NEMOPAY_API_KEY)['sessionid'])
         return self.SESSION_ID
 
-    def loginBadge(self, badge_id=NEMOPAY_CONNECTION_UID, pin=NEMOPAY_CONNECTION_PIN):
+    def loginBadge(self, badge_id=live_config.NEMOPAY_CONNECTION_UID, pin=live_config.NEMOPAY_CONNECTION_PIN):
         self.SESSION_ID = str(self.call('POSS3', 'loginBadge2', badge_id=badge_id, pin=pin)['sessionid'])
         return self.SESSION_ID
 
     def _call_url(self, service, method):
-        return NEMOPAY_API_URL + service + '/' + method
+        return live_config.NEMOPAY_API_URL + service + '/' + method
 
     def call(self, service, method, params=None, **data):
         if params is None:
-            params = { 'system_id': NEMOPAY_SYSTEM_ID }
+            params = {'system_id': NEMOPAY_SYSTEM_ID}
         if self.SESSION_ID is not None:
             params['sessionid'] = self.SESSION_ID
         r = requests.post(self._call_url(service, method), params=params, json=data)

@@ -4,6 +4,8 @@ from xml.etree import ElementTree
 
 from django.contrib.auth import get_user_model
 
+from constance import config as live_config
+
 from picsous import settings as app_settings
 from core.services import payutc
 from settings import UTC_CAS_URL
@@ -29,7 +31,7 @@ class GingerException(Exception):
 
 
 def get_ginger_info(login):
-    response = urllib2.urlopen(app_settings.GINGER_URL + login + '?key=' + app_settings.GINGER_KEY)
+    response = urllib2.urlopen(live_config.GINGER_URL + login + '?key=' + live_config.GINGER_KEY)
     if response.getcode() != 200:
         raise GingerException(response.getcode(), response.read())
     return json.loads(response.read())

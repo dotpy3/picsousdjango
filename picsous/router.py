@@ -37,6 +37,7 @@ router = routers.DefaultRouter()
 # Core
 router.register(r'bug', core_views.BugReportViewset)
 router.register(r'periodetva', core_views.PeriodeTVAViewset)
+router.register(r'userright', core_views.UserRightViewset)
 
 # Perms
 router.register(r'perms', perm_views.PermViewSet)

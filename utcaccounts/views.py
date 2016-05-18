@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.core.exceptions import PermissionDenied
 
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, permission_classes, renderer_classes
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from core import models as core_models
 from core import serializers as core_serializers
 from core.services import payutc
-
+from picsous.permissions import IsAdmin
 from utcaccounts.utils import user_creation
 
 CONNECTION_SUCCESSFUL = {'success': {'login': None, 'token': None}}
@@ -54,6 +54,8 @@ def connexion_cas_api(request):
         else:
             raise PermissionDenied('User has no right')
     user.is_staff = core_models.UserRight.objects.filter\
+    (login=login_given, right=core_models.UserRight.USERRIGHT_ARTICLES).count() > 0
+    user.is_superuser = core_models.UserRight.objects.filter\
     (login=login_given, right=core_models.UserRight.USERRIGHT_ALL).count() > 0
     user.save()
     if user.is_active:
@@ -67,7 +69,7 @@ def connexion_cas_api(request):
 @api_view(['GET'])
 @renderer_classes((JSONRenderer, ))
 def get_my_rights(request):
-    """ Obtenir les droits utilisateurs """
+    """ Obtenir ses droits utilisateurs """
     if not request.user.is_authenticated():
         return Response('NOT CONNECTED')
     if request.user.is_superuser:

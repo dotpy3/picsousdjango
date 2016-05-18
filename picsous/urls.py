@@ -27,6 +27,9 @@ créées.
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
+    url(r'^getAdminSettings$', core_views.get_admin_settings),
+    url(r'^editSettings$', core_views.save_admin_settings),
+    url(r'^getBadge$', core_views.get_badge),
     url(r'^sendconvention/(?P<id>\d+)$', perm_views.send_convention),
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
     url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
@@ -40,6 +43,6 @@ urlpatterns = [
     url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
     url(r'^connexion$', utcaccounts_views.connexion_cas_api),
     url(r'^getmyrights$', utcaccounts_views.get_my_rights),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 urlpatterns += utcaccounts_urlpatterns

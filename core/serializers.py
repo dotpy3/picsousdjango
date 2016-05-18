@@ -16,6 +16,12 @@ class PeriodeTVASerializer(serializers.ModelSerializer):
 		model = core_models.PeriodeTVA
 
 
+class UserRightSerializer(serializers.ModelSerializer):
+	# Serializer des droits utilisateurs
+	class Meta:
+		model = core_models.UserRight
+
+
 class LoginInputSerializer(serializers.Serializer):
 	# Serializer d'input de la requête de login.
 	ticket = serializers.CharField()

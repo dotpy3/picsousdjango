@@ -5,10 +5,10 @@ from sets import Set
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes, renderer_classes
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
+from picsous.permissions import IsAdmin, IsAuthorizedUser
 from picsous.settings import NEMOPAY_FUNDATION_ID
 
 from core import models as core_models
@@ -22,14 +22,14 @@ class FactureRecueViewSet(viewsets.ModelViewSet):
 
     queryset = facture_models.FactureRecue.objects.all()
     serializer_class = facture_serializers.FactureRecueSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdmin,)
 
 
 class CategorieFactureRecueViewSet(viewsets.ModelViewSet):
 
     queryset = facture_models.CategorieFactureRecue.objects.all()
     serializer_class = facture_serializers.CategorieFactureRecueSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdmin,)
 
 
 class FactureEmiseViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
@@ -37,21 +37,21 @@ class FactureEmiseViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
     queryset = facture_models.FactureEmise.objects.all()
     single_serializer_class = facture_serializers.FactureEmiseWithRowsSerializer
     serializer_class = facture_serializers.FactureEmiseSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdmin,)
 
 
 class FactureEmiseRowViewSet(viewsets.ModelViewSet):
 
     queryset = facture_models.FactureEmiseRow.objects.all()
     serializer_class = facture_serializers.FactureEmiseRowSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdmin,)
 
 
 class ChequeViewSet(viewsets.ModelViewSet):
 
     queryset = facture_models.Cheque.objects.all()
     serializer_class = facture_serializers.ChequeSerializer
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdmin,)
 
 
 def facture(request, id):
@@ -73,7 +73,7 @@ def facture(request, id):
 
 
 @api_view(['GET'])
-@permission_classes((IsAdminUser, ))
+@permission_classes((IsAdmin, ))
 @renderer_classes((JSONRenderer, ))
 def tva_info(request, id):
     periode = core_models.PeriodeTVA.objects.get(pk=id)
