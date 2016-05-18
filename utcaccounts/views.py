@@ -72,6 +72,7 @@ def get_my_rights(request):
     """ Obtenir ses droits utilisateurs """
     if not request.user.is_authenticated():
         return Response('NOT CONNECTED')
+    login_given = request.user.username
     if core_models.UserRight.objects.filter\
     (login=login_given, right=core_models.UserRight.USERRIGHT_ALL).count() > 0:
         return Response('ALL')
