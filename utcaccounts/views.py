@@ -72,9 +72,11 @@ def get_my_rights(request):
     """ Obtenir ses droits utilisateurs """
     if not request.user.is_authenticated():
         return Response('NOT CONNECTED')
-    if request.user.is_superuser:
+    if core_models.UserRight.objects.filter\
+    (login=login_given, right=core_models.UserRight.USERRIGHT_ALL).count() > 0:
         return Response('ALL')
-    elif request.user.is_staff:
+    elif core_models.UserRight.objects.filter\
+    (login=login_given, right=core_models.UserRight.USERRIGHT_ARTICLES).count() > 0:
         return Response('ARTICLES')
     else:
         return Response('NONE')
