@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^permsales/(?P<id>\d+)/$', perm_views.get_perm_sales),
     url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
     url(r'^connexion$', utcaccounts_views.connexion_cas_api),
+    url(r'^logout$', utcaccounts_views.logout),
     url(r'^getmyrights$', utcaccounts_views.get_my_rights),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

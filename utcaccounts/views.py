@@ -81,3 +81,9 @@ def get_my_rights(request):
         return Response('ARTICLES')
     else:
         return Response('NONE')
+
+@api_view(['GET'])
+def logout(request):
+    """ Se déconnecter """
+    Token.objects.filter(user=user).delete()
+    return Response(True)
