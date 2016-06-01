@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from core import models as core_models
 from core import serializers as core_serializers
 from core.services import payutc
-from picsous.permissions import IsAdmin
+from picsous.permissions import IsAdmin, IsAuthorizedUser
 from utcaccounts.utils import user_creation
 
 CONNECTION_SUCCESSFUL = {'success': {'login': None, 'token': None}}
@@ -83,7 +83,9 @@ def get_my_rights(request):
         return Response('NONE')
 
 @api_view(['GET'])
+@permission_classes((IsAuthorizedUser, ))
+@renderer_classes((JSONRenderer, ))
 def logout(request):
     """ Se déconnecter """
-    Token.objects.filter(user=user).delete()
+    Token.objects.filter(user=request.user).delete()
     return Response(True)
