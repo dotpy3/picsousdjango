@@ -21,8 +21,6 @@ SECRET_KEY = 'yi_gm6l60o-pk5uts_^o)jw^kfsbq@39w9n2+vo&o1ss^9$qod'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -182,7 +180,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = ''
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 try:
     from local_settings import *

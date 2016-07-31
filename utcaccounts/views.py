@@ -5,6 +5,7 @@
 import json
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
 from rest_framework.authtoken.models import Token
@@ -89,3 +90,17 @@ def logout(request):
     """ Se déconnecter """
     Token.objects.filter(user=request.user).delete()
     return Response(True)
+
+@api_view(['GET'])
+@permission_classes((IsAdmin, ))
+@renderer_classes((JSONRenderer, ))
+def get_user_list(request):
+    """
+    Obtenir la liste des utilisateurs et administrateurs
+    avec leur nom
+    """
+    names = {user_right.login: None for user_right in core_models.UserRight.objects.all()}
+    users = User.objects.filter(username__in=names.keys())
+    for user in users:
+        names[user.username] = ' '.join([user.first_name, user.last_name])
+    return Response([{'login': login, 'name': names[login]} for login in names])

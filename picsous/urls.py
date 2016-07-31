@@ -26,24 +26,29 @@ créées.
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
+    url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
     url(r'^getAdminSettings$', core_views.get_admin_settings),
     url(r'^editSettings$', core_views.save_admin_settings),
     url(r'^getBadge$', core_views.get_badge),
-    url(r'^sendconvention/(?P<id>\d+)$', perm_views.send_convention),
+
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
-    url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
-    url(r'^sendjustificatif/(?P<id>\d+)$', perm_views.send_justificatif),
-    url(r'^permautocomplete/$', perm_views.PermNameAutocomplete.as_view(), name='permname-autocomplete'),
-    url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
     url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
+
+    url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
     url(r'^createpayutcarticle/(?P<id>\d+)/$', perm_views.create_payutc_article),
     url(r'^deletefacturerecue/(?P<id>\d+)/$', perm_views.delete_facture_recue),
+    url(r'^justificatif/(?P<id>\d+)$', perm_views.justificatif_paiement),
+    url(r'^sendjustificatif/(?P<id>\d+)$', perm_views.send_justificatif),
     url(r'^permsales/(?P<id>\d+)/$', perm_views.get_perm_sales),
     url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
+    url(r'^permautocomplete/$', perm_views.PermNameAutocomplete.as_view(), name='permname-autocomplete'),
+    url(r'^sendconvention/(?P<id>\d+)$', perm_views.send_convention),
+
     url(r'^connexion$', utcaccounts_views.connexion_cas_api),
     url(r'^logout$', utcaccounts_views.logout),
     url(r'^getmyrights$', utcaccounts_views.get_my_rights),
+    url(r'^getUserList$', utcaccounts_views.get_user_list),
+
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 urlpatterns += utcaccounts_urlpatterns

@@ -6,7 +6,6 @@ from django.db import models
 from django.utils import timezone
 
 from core import models as core_models
-from core.services import payutc
 from picsous.settings import NEMOPAY_FUNDATION_ID, NEMOPAY_ARTICLES_CATEGORY
 
 
@@ -107,6 +106,7 @@ class Article(core_models.PricedModel):
     def create_payutc_article(self):
         if self.id_payutc:
             return self.id_payutc
+        from core.services import payutc
         c = payutc.Client()
         c.loginApp()
         c.loginBadge()
@@ -123,6 +123,7 @@ class Article(core_models.PricedModel):
         return self.id_payutc
 
     def update_ventes(self):
+        from core.services import payutc
         c = payutc.Client()
         c.loginApp()
         c.loginBadge()
