@@ -103,4 +103,7 @@ def get_user_list(request):
     users = User.objects.filter(username__in=names.keys())
     for user in users:
         names[user.username]['name'] = ' '.join([user.first_name, user.last_name])
+    for (name, val) in names:
+        if 'name' not in val.keys():
+             val['name'] = None
     return Response([{'login': login, 'name': names[login]['name'], 'right': names[login]['right']} for login in names])
