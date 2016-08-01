@@ -29,6 +29,11 @@ class ArticleSerializer(serializers.ModelSerializer):
 ArticleListSerializer = ArticleSerializer.many_init
 
 
+class ArticleAdminSerializer(ArticleSerializer):
+    ventes = serializers.IntegerField()
+    ventes_last_update = serializers.DateTimeField()
+
+
 class PermWithArticleSerializer(serializers.ModelSerializer):
     article_set = ArticleListSerializer(read_only=True, required=False)
     facturerecue_set = facture_serializers.FactureRecueListSerializer(read_only=True, required=False)

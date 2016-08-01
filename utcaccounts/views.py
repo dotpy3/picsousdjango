@@ -99,8 +99,8 @@ def get_user_list(request):
     Obtenir la liste des utilisateurs et administrateurs
     avec leur nom
     """
-    names = {user_right.login: None for user_right in core_models.UserRight.objects.all()}
+    names = {user_right.login: {'right': user_right.right} for user_right in core_models.UserRight.objects.all()}
     users = User.objects.filter(username__in=names.keys())
     for user in users:
-        names[user.username] = ' '.join([user.first_name, user.last_name])
-    return Response([{'login': login, 'name': names[login]} for login in names])
+        names[user.username]['name'] = ' '.join([user.first_name, user.last_name])
+    return Response([{'login': login, 'name': names[login]['name'], 'right': names[login]['right']} for login in names])

@@ -43,6 +43,7 @@ router.register(r'userright', core_views.UserRightViewset)
 router.register(r'perms', perm_views.PermViewSet)
 router.register(r'permnames', perm_views.SimplePermViewSet)
 router.register(r'articles', perm_views.ArticleViewSet)
+router.register(r'articlesAdmin', perm_views.ArticleAdminViewSet)
 
 # Factures
 router.register(r'facturesRecues', facture_views.FactureRecueViewSet)

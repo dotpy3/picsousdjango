@@ -16,7 +16,7 @@ from dal import autocomplete
 from facture import models as facture_models
 from perm import models as perm_models
 from perm import serializers as perm_serializers
-from picsous.permissions import IsAuthorizedUser
+from picsous.permissions import IsAdmin, IsAuthorizedUser
 from picsous.settings import DEFAULT_FROM_EMAIL
 
 
@@ -72,6 +72,15 @@ class ArticleViewSet(viewsets.ModelViewSet):
     queryset = perm_models.Article.objects.all()
     serializer_class = perm_serializers.ArticleSerializer
     permission_classes = (IsAuthorizedUser,)
+
+
+class ArticleAdminViewSet(ArticleViewSet):
+    """
+    Article admin viewset:
+    Autorise l'édition du nombre de ventes
+    """
+    serializer_class = perm_serializers.ArticleAdminSerializer
+    permission_classes = (IsAdmin, )
 
 
 def convention_partenariat(request, id):
