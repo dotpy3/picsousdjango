@@ -38,9 +38,10 @@ router = routers.DefaultRouter()
 router.register(r'bug', core_views.BugReportViewset)
 router.register(r'periodetva', core_views.PeriodeTVAViewset)
 router.register(r'userright', core_views.UserRightViewset)
+router.register(r'semester', core_views.SemestreViewset)
 
 # Perms
-router.register(r'perms', perm_views.PermViewSet)
+router.register(r'perms', perm_views.PermViewSet, base_name='picsous-perms')
 router.register(r'permnames', perm_views.SimplePermViewSet)
 router.register(r'articles', perm_views.ArticleViewSet)
 router.register(r'articlesAdmin', perm_views.ArticleAdminViewSet)

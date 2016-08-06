@@ -64,6 +64,7 @@ CONSTANCE_CONFIG = {
                                      'pour la connexion à PayUTC.', int),
     'NEMOPAY_API_KEY': ('', 'Clé d\'application permettant de se connecter à PayUTC.', str),
     'NEMOPAY_API_URL': ('https://api.nemopay.net/services/', 'Adresse permettant de se connecter à PayUTC.', str),
+    'SEMESTER': (0, 'Semestre actuel', int),
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'

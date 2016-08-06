@@ -4,6 +4,7 @@ from django.db import models
 
 from core import models as core_models
 from perm import models as perm_models
+from core.services.semestre_api import get_current_semester
 
 
 class CategorieFactureRecue(models.Model):
@@ -36,6 +37,7 @@ class FactureRecue(core_models.PricedModel):
     personne_a_rembourser = models.CharField(null=True, default=None, max_length=255)
     immobilisation = models.BooleanField(default=False)
     remarque = models.TextField(null=True, default=None)
+    semestre = models.ForeignKey(core_models.Semestre, null=True, default=get_current_semester)
 
 
 class Cheque(models.Model):
@@ -79,6 +81,7 @@ class FactureEmise(models.Model):
     date_paiement = models.DateField(null=True)
     date_due = models.DateField()
     etat = models.CharField(max_length=1, choices=FACTURE_STATES)
+    semestre = models.ForeignKey(core_models.Semestre, null=True, default=get_current_semester)
 
     def get_total_ht_price(self):
         rows = self.factureemiserow_set.all()
