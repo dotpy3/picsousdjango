@@ -20,9 +20,11 @@ from facture import serializers as facture_serializers
 
 class FactureRecueViewSet(viewsets.ModelViewSet):
 
-    queryset = facture_models.FactureRecue.objects.all()
     serializer_class = facture_serializers.FactureRecueSerializer
     permission_classes = (IsAdmin,)
+    def get_queryset(self):
+        qs = facture_models.FactureRecue.objects
+        return core_models.Semestre.filter_queryset(qs, self.request)
 
 
 class CategorieFactureRecueViewSet(viewsets.ModelViewSet):
@@ -34,10 +36,12 @@ class CategorieFactureRecueViewSet(viewsets.ModelViewSet):
 
 class FactureEmiseViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
 
-    queryset = facture_models.FactureEmise.objects.all()
     single_serializer_class = facture_serializers.FactureEmiseWithRowsSerializer
     serializer_class = facture_serializers.FactureEmiseSerializer
     permission_classes = (IsAdmin,)
+    def get_queryset(self):
+        qs = facture_models.FactureEmise.objects
+        return core_models.Semestre.filter_queryset(qs, self.request)
 
 
 class FactureEmiseRowViewSet(viewsets.ModelViewSet):

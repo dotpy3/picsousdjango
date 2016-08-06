@@ -53,7 +53,6 @@ class PermViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
     serializer_class = perm_serializers.PermSerializer
     single_serializer_class = perm_serializers.PermWithArticleSerializer
     permission_classes = (IsAuthorizedUser,)
-    # queryset = perm_models.Perm.objects.all()
     def get_queryset(self):
         qs = perm_models.Perm.objects
         return core_models.Semestre.filter_queryset(qs, self.request)

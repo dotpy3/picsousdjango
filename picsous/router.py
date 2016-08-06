@@ -47,8 +47,8 @@ router.register(r'articles', perm_views.ArticleViewSet)
 router.register(r'articlesAdmin', perm_views.ArticleAdminViewSet)
 
 # Factures
-router.register(r'facturesRecues', facture_views.FactureRecueViewSet)
+router.register(r'facturesRecues', facture_views.FactureRecueViewSet, base_name='picsous-facturesrecues')
 router.register(r'categoriesFactureRecue', facture_views.CategorieFactureRecueViewSet)
-router.register(r'factureEmises', facture_views.FactureEmiseViewSet)
+router.register(r'factureEmises', facture_views.FactureEmiseViewSet, base_name='picsous-factureemises')
 router.register(r'factureEmiseRows', facture_views.FactureEmiseRowViewSet)
 router.register(r'cheques', facture_views.ChequeViewSet)
