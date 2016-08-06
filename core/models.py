@@ -61,6 +61,34 @@ class TimeModel(models.Model):
     fin = models.DateField()
 
 
+class Semestre(models.Model):
+    # Modèle représentant un semestre de cours.
+    SEMESTRE_AUTOMNE = 'A'
+    SEMESTRE_PRINTEMPS = 'P'
+
+    SEMESTRE_CHOICES = (
+        (SEMESTRE_AUTOMNE, 'Automne'),
+        (SEMESTRE_PRINTEMPS, 'Printemps'),
+    )
+
+    annee = models.IntegerField()
+    periode = models.CharField(max_length=1, choices=SEMESTRE_CHOICES)
+
+    @classmethod
+    def filter_queryset(cls, qs, request=None):
+        from picsous.permissions import IsAdmin
+        from constance import config as live_config
+        if request:
+            semester_wanted = request.GET.get("semester", False)
+        if request and IsAdmin().has_permission(request, None) and semester_wanted != False:
+            if semester_wanted == "all":
+                return qs.all()
+            elif int(semester_wanted) > 0:
+                return qs.filter(semestre__id=int(semester_wanted))
+        else:
+            return qs.filter(semestre__id=live_config.SEMESTER)
+
+
 class PeriodeTVA(TimeModel):
     """
     Période de TVA.

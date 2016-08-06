@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 
 from core import models as core_models
+from core.services.semestre_api import get_current_semester
 from picsous.settings import NEMOPAY_FUNDATION_ID, NEMOPAY_ARTICLES_CATEGORY
 
 
@@ -30,6 +31,7 @@ class Perm(models.Model):
 
     nom = models.CharField(max_length=255)
     asso = models.BooleanField(default=True)  # true if asso
+    semestre = models.ForeignKey(core_models.Semestre, null=True, default=get_current_semester)
     nom_resp = models.CharField(null=True, default=None, max_length=255)
     mail_resp = models.CharField(null=True, default=None, max_length=255)
     tel_resp = models.CharField(null=True, default=None, max_length=255)

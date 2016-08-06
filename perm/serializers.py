@@ -8,6 +8,7 @@ class PermSerializer(serializers.ModelSerializer):
     facturerecue_set = facture_serializers.SimpleFactureRecueListSerializer(read_only=True, required=False)
     class Meta:
         model = perm_models.Perm
+        exclude = ('semestre', )
 
 
 class SimplePermSerializer(serializers.ModelSerializer):

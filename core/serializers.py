@@ -16,6 +16,12 @@ class PeriodeTVASerializer(serializers.ModelSerializer):
 		model = core_models.PeriodeTVA
 
 
+class SemestreSerializer(serializers.ModelSerializer):
+	# Serializer des semestres
+	class Meta:
+		model = core_models.Semestre
+
+
 class UserRightSerializer(serializers.ModelSerializer):
 	# Serializer des droits utilisateurs
 	class Meta:

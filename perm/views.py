@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from sets import Set
-
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.template.loader import get_template
@@ -11,8 +9,11 @@ from rest_framework.decorators import (api_view, permission_classes,
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from core import viewsets as core_viewsets
+from constance import  config as live_config
 from dal import autocomplete
+
+from core import viewsets as core_viewsets
+from core import models as core_models
 from facture import models as facture_models
 from perm import models as perm_models
 from perm import serializers as perm_serializers
@@ -49,10 +50,13 @@ class PermViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
     """
     Perm viewset
     """
-    queryset = perm_models.Perm.objects.all()
     serializer_class = perm_serializers.PermSerializer
     single_serializer_class = perm_serializers.PermWithArticleSerializer
     permission_classes = (IsAuthorizedUser,)
+    # queryset = perm_models.Perm.objects.all()
+    def get_queryset(self):
+        qs = perm_models.Perm.objects
+        return core_models.Semestre.filter_queryset(qs, self.request)
 
 
 class SimplePermViewSet(mixins.ListModelMixin, viewsets.GenericViewSet,
@@ -193,7 +197,7 @@ class PermNameAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.q:
             return perm_models.Perm.objects.none()
-        qs = perm_models.Perm.objects.filter(nom__icontains=self.q)
+        qs = core_models.Semestre.filter_queryset(perm_models.Perm.objects).filter(nom__icontains=self.q)
 
         return qs
 

@@ -35,6 +35,15 @@ class PeriodeTVAViewset(viewsets.ModelViewSet):
     serializer_class = core_serializers.PeriodeTVASerializer
 
 
+class SemestreViewset(viewsets.ModelViewSet):
+    """
+    Semestre endpoint
+    """
+    permission_classes = (IsAdmin, )
+    queryset = core_models.Semestre.objects.all()
+    serializer_class = core_serializers.SemestreSerializer
+
+
 class UserRightViewset(viewsets.ModelViewSet):
     """
     UserRight endpoint
