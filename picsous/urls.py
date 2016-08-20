@@ -33,6 +33,8 @@ urlpatterns = [
 
     url(r'^facture/(?P<id>\d+)$', facture_views.facture),
     url(r'^tvainfo/(?P<id>\d+)$', facture_views.tva_info),
+    url(r'^generate/cheques$', facture_views.excel_check_generation),
+    url(r'^generate/factures$', facture_views.excel_facture_generation),
 
     url(r'^convention/(?P<id>\d+)$', perm_views.convention_partenariat),
     url(r'^createpayutcarticle/(?P<id>\d+)/$', perm_views.create_payutc_article),

@@ -2,18 +2,20 @@
 
 from sets import Set
 
+from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+import xlwt
 
 from picsous.permissions import IsAdmin, IsAuthorizedUser
 from picsous.settings import NEMOPAY_FUNDATION_ID
 
 from core import models as core_models
 from core import viewsets as core_viewsets
-from core.services import payutc
+from core.services import payutc, excel_generation
 from facture import models as facture_models
 from facture import serializers as facture_serializers
 
@@ -107,3 +109,27 @@ def tva_info(request, id):
     return Response({'tva_deductible': tva_deductible,
                      'tva_a_declarer': tva_a_declarer,
                      'tva_a_declarer_total': sum(tva['montant'] for tva in tva_a_declarer)})
+
+def excel_check_generation(request):
+    # Vue permettant de générer un fichier excel avec la liste des chèques, et des factures associées
+    response = HttpResponse(content_type='application/vnd.ms-excel; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="Picasso_cheques.xls"'
+
+    writer = xlwt.Workbook(encoding="utf-8")
+    ws = writer.add_sheet('Chèques')
+    excel_dump = excel_generation.generate_checks_xls(ws)
+    writer.save(response)
+    return response
+
+def excel_facture_generation(request):
+    # Vue permettant de générer un fichier excel avec la liste des factures, et des perms associées
+    response = HttpResponse(content_type='application/vnd.ms-excel; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="Picasso_factures_recues.xls"'
+
+    writer = xlwt.Workbook(encoding="utf-8")
+    ws = writer.add_sheet('Factures reçues')
+    excel_dump = excel_generation.generate_receipts_xls(ws)
+    writer.save(response)
+    return response
+
+
