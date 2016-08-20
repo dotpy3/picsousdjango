@@ -35,7 +35,7 @@ def generate_receipts_xls(worksheet):
             worksheet.write(num+1, 9, facture.perm.nom)
             worksheet.write(num + 1, 10, facture.perm.date)
             worksheet.write(num + 1, 11, facture.perm.get_periode_display())
-            worksheet.write(num + 1, 12, facture.perm.nom_resp or "" + " - " + facture.perm.mail_resp or "Pas d'email")
+            worksheet.write(num + 1, 12, (facture.perm.nom_resp or "") + " - " + (facture.perm.mail_resp or "Pas d'email"))
         else:
             for i in range(9, 13):
                 worksheet.write(num+1, i, "--")
