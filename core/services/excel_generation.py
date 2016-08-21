@@ -27,8 +27,8 @@ def generate_receipts_xls(worksheet):
         worksheet.write(0, n, val)
     for num, facture in enumerate(qs):
         for n, val in enumerate([facture.categorie.code + str(facture.id) if facture.categorie else facture.id,
-                                 facture.nom_entreprise, unicode(facture.date),
-                                 unicode(facture.date_paiement), facture.prix,
+                                 facture.nom_entreprise, unicode(facture.date or "--"),
+                                 unicode(facture.date_paiement or "--"), facture.prix,
                                  facture.get_total_taxes(), facture.get_etat_display(),
                                  facture.personne_a_rembourser or "", facture.date_remboursement or ""]):
             worksheet.write(num+1, n, val)
