@@ -27,14 +27,14 @@ def generate_receipts_xls(worksheet):
         worksheet.write(0, n, val)
     for num, facture in enumerate(qs):
         for n, val in enumerate([facture.categorie.code + str(facture.id) if facture.categorie else facture.id,
-                                 facture.nom_entreprise, facture.date.strftime("%Y-%m-%d %H:%M:%S"),
-                                 facture.date_paiement.strftime("%Y-%m-%d %H:%M:%S"), facture.prix,
+                                 facture.nom_entreprise, unicode(facture.date),
+                                 unicode(facture.date_paiement), facture.prix,
                                  facture.get_total_taxes(), facture.get_etat_display(),
                                  facture.personne_a_rembourser or "", facture.date_remboursement or ""]):
             worksheet.write(num+1, n, val)
         if facture.perm:
             worksheet.write(num+1, 9, facture.perm.nom)
-            worksheet.write(num + 1, 10, facture.perm.date.strftime("%Y-%m-%d %H:%M:%S"))
+            worksheet.write(num + 1, 10, unicode(facture.perm.date))
             worksheet.write(num + 1, 11, facture.perm.get_periode_display())
             worksheet.write(num + 1, 12, (facture.perm.nom_resp or "") + " - " + (facture.perm.mail_resp or "Pas d'email"))
         else:
