@@ -57,6 +57,8 @@ class Cheque(models.Model):
     valeur = models.FloatField(default=0)
     state = models.CharField(max_length=1, choices=CHEQUE_STATES)
     destinataire = models.CharField(max_length=255, null=True, default=None)
+    date_encaissement = models.DateField(null=True)
+    date_emission = models.DateField(null=True)
     commentaire = models.TextField(null=True, default=None)
     facturerecue = models.ForeignKey(FactureRecue, null=True)
 

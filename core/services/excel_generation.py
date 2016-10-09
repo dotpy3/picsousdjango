@@ -41,4 +41,3 @@ def generate_receipts_xls(worksheet):
             for i in range(9, 13):
                 worksheet.write(num+1, i, "--")
     return worksheet
-
