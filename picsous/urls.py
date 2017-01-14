@@ -27,7 +27,9 @@ créées.
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^autocomplete/(?P<query>\w+)$', core_views.autocomplete),
+    url(r'^getCurrentCredit', core_views.semester_beginning_credit),
     url(r'^getAdminSettings$', core_views.get_admin_settings),
+    url(r'^getSemestreState$', core_views.semestre_state),
     url(r'^editSettings$', core_views.save_admin_settings),
     url(r'^getBadge$', core_views.get_badge),
 

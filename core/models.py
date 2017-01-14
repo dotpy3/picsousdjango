@@ -74,6 +74,8 @@ class Semestre(models.Model):
     annee = models.IntegerField()
     periode = models.CharField(max_length=1, choices=SEMESTRE_CHOICES)
 
+    solde_debut = models.IntegerField(default=0)
+
     @classmethod
     def filter_queryset(cls, qs, request=None):
         from picsous.permissions import IsAdmin
@@ -87,6 +89,17 @@ class Semestre(models.Model):
                 return qs.filter(semestre__id=int(semester_wanted))
         else:
             return qs.filter(semestre__id=live_config.SEMESTER)
+
+    def get_paid_bills(self):
+        from facture.models import FactureEmise, FactureRecue
+        sum_paid_received_bills = sum(fac.prix for fac in FactureRecue.objects.filter(semestre=self,
+                                                                                      etat=FactureRecue.FACTURE_PAYEE))
+        sum_paid_outvoiced_bills = sum(fac.prix for fac in FactureEmise.objects.filter(semestre=self,
+                                                                                       etat=FactureEmise.FACTURE_PAYEE))
+        return {
+            'sum_paid_received_bills': sum_paid_received_bills,
+            'sum_paid_outvoiced_bills': sum_paid_outvoiced_bills,
+        }
 
 
 class PeriodeTVA(TimeModel):

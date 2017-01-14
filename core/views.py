@@ -74,6 +74,33 @@ def autocomplete(request, query):
     return Response(c.call('TRESO', 'userAutocomplete', queryString=query))
 
 
+@api_view(['GET'])
+@permission_classes((IsAdmin, ))
+@renderer_classes((JSONRenderer, ))
+def semestre_state(request):
+    """
+    Endpoint qui renvoie la somme des factures payées du semestre (émises et reçues)
+    """
+    return Response(core_models.Semestre.objects.get(pk=config.SEMESTER).get_paid_bills())
+
+
+@api_view(['GET', 'PUT'])
+@permission_classes((IsAdmin, ))
+@parser_classes((JSONParser, ))
+@renderer_classes((JSONRenderer, ))
+def semester_beginning_credit(request):
+    """
+    Endpoint qui renvoie le solde au début du semestre actuel - sauf si 
+    l'utilisateur spécifie un semester (avec le paramètre GET "semester")
+    """
+    semesterId = request.GET.get("semester", config.SEMESTER)
+    semester = core_models.Semestre.objects.get(pk=semesterId)
+    if request.method == 'PUT':
+        semester.solde_debut = request.data['solde_debut']
+        semester.save()
+    return Response(int(semester.solde_debut))
+
+
 def get_constance_params():
     return [{'key': key, 'value': config.__getattr__(key)} for key in CONSTANCE_CONFIG.keys()]
 

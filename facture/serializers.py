@@ -45,6 +45,11 @@ class CategorieFactureRecueSerializer(serializers.ModelSerializer):
         model = facture_models.CategorieFactureRecue
 
 
+class ReversementEffectueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = facture_models.ReversementEffectue
+
+
 class FactureEmiseSerializer(serializers.ModelSerializer):
     class Meta:
         model = facture_models.FactureEmise

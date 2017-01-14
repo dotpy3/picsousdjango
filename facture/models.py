@@ -107,3 +107,20 @@ class FactureEmiseRow(core_models.PricedModel):
 
     def get_total_taxes_for_row(self):
         return self.qty * self.get_total_taxes()
+
+
+class ReversementEffectue(core_models.PricedModel):
+    """
+    Reversement incluant la TVA
+
+    Note: le use case de ce modèle est le calcul du solde théorique sur le compte
+    en banque du Pic (option "banque" sur le front). Actuellement, les utilisateurs
+    rentrent à la main les reversements - les importer demanderait des process supplémentaires
+    en termes d'identification du reversement, etc. Si des use cases de la sauvegarde des reversements
+    s'y prêtent, il pourrait être intéressant de conserver plus d'infos (ID sur payutc, p.e.)
+    mais il n'y a pas d'intérêt pour le moment.
+
+    C'est un PricedModel mais il y a peu d'intérêt à conserver la TVA.
+    """
+    semestre = models.ForeignKey(core_models.Semestre, null=True, default=get_current_semester)
+    date_effectue = models.DateField(null=True) # Date a laquelle il fut effectue

@@ -36,6 +36,15 @@ class CategorieFactureRecueViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdmin,)
 
 
+class ReversementEffectueViewSet(viewsets.ModelViewSet):
+
+    serializer_class = facture_serializers.ReversementEffectueSerializer
+    permission_classes = (IsAdmin,)
+    def get_queryset(self):
+        qs = facture_models.ReversementEffectue.objects
+        return core_models.Semestre.filter_queryset(qs, self.request)
+
+
 class FactureEmiseViewSet(core_viewsets.RetrieveSingleInstanceModelViewSet):
 
     single_serializer_class = facture_serializers.FactureEmiseWithRowsSerializer

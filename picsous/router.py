@@ -52,3 +52,4 @@ router.register(r'categoriesFactureRecue', facture_views.CategorieFactureRecueVi
 router.register(r'factureEmises', facture_views.FactureEmiseViewSet, base_name='picsous-factureemises')
 router.register(r'factureEmiseRows', facture_views.FactureEmiseRowViewSet)
 router.register(r'cheques', facture_views.ChequeViewSet)
+router.register(r'reversements', facture_views.ReversementEffectueViewSet, base_name='picsous-reversements')
