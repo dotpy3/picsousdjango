@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^sendjustificatif/(?P<id>\d+)$', perm_views.send_justificatif),
     url(r'^permsales/(?P<id>\d+)/$', perm_views.get_perm_sales),
     url(r'^updatearticle/(?P<id>\d+)/$', perm_views.get_article_sales),
-    url(r'^permautocomplete/$', perm_views.PermNameAutocomplete.as_view(), name='permname-autocomplete'),
+    url(r'^permautocomplete/$', perm_views.perm_name_autocomplete),
     url(r'^sendconvention/(?P<id>\d+)$', perm_views.send_convention),
 
     url(r'^connexion$', utcaccounts_views.connexion_cas_api),

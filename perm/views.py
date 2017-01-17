@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.template.loader import get_template
@@ -8,9 +9,6 @@ from rest_framework.decorators import (api_view, permission_classes,
                                        renderer_classes)
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-
-from constance import  config as live_config
-from dal import autocomplete
 
 from core import viewsets as core_viewsets
 from core import models as core_models
@@ -189,16 +187,20 @@ def send_convention(request, id):
     return Response(True)
 
 
-class PermNameAutocomplete(autocomplete.Select2QuerySetView):
-
-    permission_classes = (IsAuthorizedUser,)
-
-    def get_queryset(self):
-        if not self.q:
-            return perm_models.Perm.objects.none()
-        qs = core_models.Semestre.filter_queryset(perm_models.Perm.objects).filter(nom__icontains=self.q)
-
-        return qs
+@api_view(['GET'])
+@permission_classes((IsAuthorizedUser, ))
+@renderer_classes((JSONRenderer, ))
+def perm_name_autocomplete(request):
+    q = request.GET.get("q", None)
+    if q is None:
+        raise ValidationError("No query parameter \"q\"")
+    qs_val = core_models.Semestre.filter_queryset(perm_models.Perm.objects).filter(nom__icontains=q).values('id', 'nom',
+                                                                                                            'date')
+    qs_autocomplete = [{'id': val["id"], 'text': val["nom"] + " (" + val["date"].strftime("%d/%m") + ")"}
+                       for val in qs_val]
+    return Response({
+        'results': qs_autocomplete
+    })
 
 
 @api_view(['POST'])
