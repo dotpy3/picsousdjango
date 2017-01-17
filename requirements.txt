@@ -1,7 +1,7 @@
 Django==1.10.5
-django-constance[database]
-django-cors-headers
-django-extensions
-djangorestframework
-requests
+django-constance[database]==1.2
+django-cors-headers==1.1.0
+django-extensions==1.6.7
+djangorestframework==3.4.1
+requests==2.10.0
 xlwt==1.1.2
