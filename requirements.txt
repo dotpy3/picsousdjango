@@ -1,5 +1,4 @@
 Django==1.10.5
-django-autocomplete-light
 django-constance[database]
 django-cors-headers
 django-extensions
