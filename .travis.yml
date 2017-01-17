@@ -14,5 +14,5 @@ before_script:
 
 install:
   - pip install -r requirements.txt
-  - apt-get install build-dep python-psycopg2
+  - sudo apt-get install build-dep python-psycopg2
   - pip install psycopg2
