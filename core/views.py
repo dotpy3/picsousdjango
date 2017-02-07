@@ -71,7 +71,7 @@ def autocomplete(request, query):
     c.loginApp()
     c.loginBadge()
 
-    return Response(c.call('TRESO', 'userAutocomplete', queryString=query))
+    return Response(c.call('USERRIGHT', 'userAutocomplete', queryString=query))
 
 
 @api_view(['GET'])
