@@ -107,6 +107,8 @@ def get_user_list(request):
     for name in names:
         if 'name' not in names[name].keys():
              names[name]['name'] = None
+        if 'id' not in names[name].keys():
+             del names[name]
     return Response([{'login': login,
                       'id': names[login]['id'],
                       'name': names[login]['name'],
