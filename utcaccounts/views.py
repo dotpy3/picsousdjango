@@ -103,12 +103,15 @@ def get_user_list(request):
     users = User.objects.filter(username__in=names.keys())
     for user in users:
         names[user.username]['name'] = ' '.join([user.first_name, user.last_name])
-        names[user.username]['id'] = user.id
+        names[user.username]['id'] = user.i
+    to_delete = list()
     for name in names:
         if 'name' not in names[name].keys():
              names[name]['name'] = None
         if 'id' not in names[name].keys():
-             del names[name]
+             to_delete.append(name)
+    for name in to_delete:
+        del names[name]
     return Response([{'login': login,
                       'id': names[login]['id'],
                       'name': names[login]['name'],
